@@ -1,0 +1,12 @@
+class Choice
+{
+	FString mHeading;
+	FString mDescription;
+	String location;
+	
+	Choice(FString heading, FString description)
+	{
+		mHeading = heading;
+		mDescription = description;
+	}
+}

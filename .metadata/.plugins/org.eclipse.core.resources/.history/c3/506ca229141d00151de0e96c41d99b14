@@ -1,0 +1,19 @@
+public class Scene
+{
+	String mName;
+
+	Scene(String name)
+	{
+		mName = name;
+	}
+	
+	String getName()
+	{
+		return mName;
+	}
+	
+	void addSceneContent(FString[] strings, ChoiceList choicelist)
+	{
+		
+	}
+}

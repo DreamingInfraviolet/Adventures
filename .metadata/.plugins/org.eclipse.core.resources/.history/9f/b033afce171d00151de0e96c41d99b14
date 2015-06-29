@@ -1,0 +1,16 @@
+import java.util.ArrayDeque;
+
+public class SceneLocation
+{
+	ArrayDeque<String> mLocationStack; //a stack representing the location as a series of steps from the Parent.
+	
+	void addLocationToFront(String locationName)
+	{
+		mLocationStack.addLast(locationName);
+	}
+	
+	void addLocationToBack(String locationName)
+	{
+		mLocationStack.addFirst(locationName);
+	}
+}
