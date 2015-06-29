@@ -1,5 +1,0 @@
-class Choice
-{
-	FString mHeading;
-	FString mDescription;
-}
