@@ -1,0 +1,5 @@
+
+public class SceneLocation
+{
+	ArrayList<String> mLocationStack; //a stack representing the location as a series of steps from the Parent.
+}

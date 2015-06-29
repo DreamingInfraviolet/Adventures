@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+
+//starting location is the null location.
+//destination is the final item on the stack.
+
+public class SectionLocation
+{
+	ArrayList<Section> mLocationStack = new ArrayList<>(); //a stack representing the location as a series of steps from the Parent.
+	Scene mScene = null;
+	
+	
+	//Adds a location to the back of the stack, essentially adding a starting location condition.
+	void addLocationToBack(Section locationName)
+	{
+		mLocationStack.add(locationName);
+	}
+	
+	void setScene(Scene scene)
+	{
+		mScene = scene;
+	}
+}

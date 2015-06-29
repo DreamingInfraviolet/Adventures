@@ -1,0 +1,17 @@
+class Choice
+{
+	FString mHeading;
+	FString mDescription;
+	SceneLocation mLocation;
+	
+	Choice(FString heading, FString description)
+	{
+		mHeading = heading;
+		mDescription = description;
+	}
+	
+	void setSceneLocation(SceneLocation location)
+	{
+		mSceneLocation = location;
+	}
+}
