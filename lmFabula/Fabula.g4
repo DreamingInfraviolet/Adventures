@@ -5,23 +5,20 @@ prog: sectionContent EOF ;
 sectionContent : (section | scene)* ;
 section : IDENTIFIER '[' sectionContent ']' ;
 
-scene : 'scene' IDENTIFIER '{' STRING* choicelist? '}' ;
-sceneContent : IDENTIFIER ;
+scene : 'scene' IDENTIFIER '{' sceneContent '}' ;
+sceneContent : STRING* choicelist? ;
 
 STRING : (('"' (~('"') | '\\"')* '"')
 	   | ('\'' (~('\'') | '\\\'')* '\'') )+ ;
 
 choicelist : (choice)+ ;
-choice : CHOICE STRING ((choicerhs) | '{' choicerhs '}') ;
-
-CHOICE : 'choice';
-choicerhs : STRING? GOTO sceneLocation ;
+choice : 'choice' STRING ((choicerhs) | '{' choicerhs '}') ;
+choicerhs : STRING? 'goto' sceneLocation ;
 
 sceneLocation : IDENTIFIER (ARROW IDENTIFIER)* ;
 
 ARROW : '->';
 
-GOTO : 'goto';
 
 LINECOMMENT : '//' (~('\n'))* -> skip ;
 BLOCKCOMMENT : '/*' .*? '*/' -> skip;
