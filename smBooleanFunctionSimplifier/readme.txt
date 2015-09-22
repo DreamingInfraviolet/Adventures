@@ -1,1 +1,0 @@
-This is a boolean function evaluator and simplifier. It is not yet complete ^^

@@ -95,7 +95,7 @@ class Grid:
 	shouldPrintMessage = False
 	boardValid = False
 
-	blankSquaresToHave = 60
+	blankSquaresToHave = 10
 
 
 	#initialises the grid, setting the border ticknesses.
@@ -135,7 +135,7 @@ class Grid:
 
 	#Returns 1 if passed game rules. More if too many. Less if no occurance.
 	def checkSectionConstraint(self, x, y):
-		sectionCoord = (x/3, y/3)
+		sectionCoord = (x//3, y//3)
 		n = self.grid[x][y].get()
 		numberOfN=0
 		for i in range (3*sectionCoord[0], 3*sectionCoord[0]+3):
@@ -219,7 +219,7 @@ class Grid:
 		return (False, [-1])
 
 
-
+	#Solves the board using an external C++ solver.
 	def externalSolve(self, programName):
 		args = "./"+programName
 		for i in range(9):
@@ -258,7 +258,7 @@ class Grid:
 		self.clearRandomSquares(self.blankSquaresToHave)
 		self.setPermissions()
 
-		print "Time Taken: " +  str(t1-t0) + " s"
+		print("Time Taken: " +  str(t1-t0) + " s")
 
 
 	def clearRandomSquares(self, noToClear):
@@ -280,13 +280,13 @@ class Grid:
 	#draws the borders/lines to convey the grid.
 	def drawBorders(self):
 		for i in range(1,3):
-			pygame.draw.rect(screen, (0,0,0), [i*(size[0]/3)-(self.mBorderLarge/2), 0, self.mBorderLarge, size[1]])
-			pygame.draw.rect(screen, (0,0,0), [0, i*(size[0]/3)-(self.mBorderLarge/2), size[0], self.mBorderLarge])
+			pygame.draw.rect(screen, (0,0,0), [i*(size[0]//3)-(self.mBorderLarge//2), 0, self.mBorderLarge, size[1]])
+			pygame.draw.rect(screen, (0,0,0), [0, i*(size[0]//3)-(self.mBorderLarge//2), size[0], self.mBorderLarge])
 
 		for i in range (3): #go through squares
 			for j in range(1,3): #go through lines
-				pygame.draw.rect(screen, (0,0,0), [(size[0]/3)*i + (size[0]/9)*j, 0, self.mBorderSmall, size[1]])
-				pygame.draw.rect(screen, (0,0,0), [0, (size[1]/3)*i + (size[1]/9)*j, size[0], self.mBorderSmall])
+				pygame.draw.rect(screen, (0,0,0), [(size[0]//3)*i + (size[0]//9)*j, 0, self.mBorderSmall, size[1]])
+				pygame.draw.rect(screen, (0,0,0), [0, (size[1]//3)*i + (size[1]//9)*j, size[0], self.mBorderSmall])
 
 
 	#draws the numbers in the grid.
@@ -300,14 +300,14 @@ class Grid:
 		
 		colour = (0, 255, 150)
 
-		pygame.draw.rect(screen, colour, [self.cursorPos[0]*(size[0]/9),self.cursorPos[1]*(size[1]/9),
-						self.cursorWidth, size[1]/9]) #vertical 1
-		pygame.draw.rect(screen, colour, [(self.cursorPos[0]+1)*(size[0]/9)-self.cursorWidth,self.cursorPos[1]*(size[1]/9),
-						self.cursorWidth, size[1]/9]) #vertical 2
-		pygame.draw.rect(screen, colour, [self.cursorPos[0]*(size[0]/9),self.cursorPos[1]*(size[1]/9),
-						size[1]/9,self.cursorWidth]) #horizontal 1
-		pygame.draw.rect(screen, colour, [self.cursorPos[0]*(size[0]/9),(self.cursorPos[1]+1)*(size[1]/9)-self.cursorWidth,
-						size[1]/9,self.cursorWidth]) #horizontal 2
+		pygame.draw.rect(screen, colour, [self.cursorPos[0]*(size[0]//9),self.cursorPos[1]*(size[1]//9),
+						self.cursorWidth, size[1]//9]) #vertical 1
+		pygame.draw.rect(screen, colour, [(self.cursorPos[0]+1)*(size[0]//9)-self.cursorWidth,self.cursorPos[1]*(size[1]//9),
+						self.cursorWidth, size[1]//9]) #vertical 2
+		pygame.draw.rect(screen, colour, [self.cursorPos[0]*(size[0]//9),self.cursorPos[1]*(size[1]//9),
+						size[1]//9,self.cursorWidth]) #horizontal 1
+		pygame.draw.rect(screen, colour, [self.cursorPos[0]*(size[0]//9),(self.cursorPos[1]+1)*(size[1]//9)-self.cursorWidth,
+						size[1]//9,self.cursorWidth]) #horizontal 2
 
 
 	#draws either an error message or a success message, depending on whether the grid validity flag is set to True.
@@ -352,7 +352,7 @@ class Grid:
 	def updateCursor(self, screenPos):
 		if self.shouldPrintMessage:
 			return
-		self.cursorPos = (screenPos[0]/(size[0]/9), screenPos[1]/(size[1]/9))
+		self.cursorPos = (screenPos[0]//(size[0]//9), screenPos[1]//(size[1]//9))
 
 	#moves the currently selected tile, keeping it inside the sudoku grid.
 	def moveCursor(self, directionX, directionY):

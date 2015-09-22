@@ -1,2 +1,0 @@
-INDEX VERSION 1.127+/home/anima/Programming/.metadata/.plugins/org.eclipse.jdt.core
-2017087130.index
