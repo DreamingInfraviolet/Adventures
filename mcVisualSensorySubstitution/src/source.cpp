@@ -1,4 +1,5 @@
 #include "opencv2/highgui/highgui.hpp"
+#include <opencv2/opencv.hpp>
 #include <iostream>
 
 using namespace cv;
@@ -33,6 +34,7 @@ int main(int argc, char* argv[])
 			break;
 		}
 
+
 		imshow("MyVideo", frame); //show the frame in "MyVideo" window
 
 		if (waitKey(30) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
@@ -42,5 +44,4 @@ int main(int argc, char* argv[])
 		}
 	}
 	return 0;
-
 }

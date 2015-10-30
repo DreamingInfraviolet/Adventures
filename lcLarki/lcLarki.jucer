@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="LI6yF6" name="lcLarki" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.anima.larki" includeBinaryInAppConfig="1"
+              jucerVersion="3.2.0" companyName="LightOfAnima" companyWebsite="www.github.com/lightofanima"
+              companyEmail="lightofanima@gmail.com">
+  <MAINGROUP id="KXlcPh" name="lcLarki">
+    <GROUP id="{D9844421-DAB3-85BA-F258-939663FA9C81}" name="Source">
+      <FILE id="RfBG6I" name="pixelrgba.cpp" compile="1" resource="0" file="Source/pixelrgba.cpp"/>
+      <FILE id="R6INRU" name="pixelrgba.h" compile="0" resource="0" file="Source/pixelrgba.h"/>
+      <FILE id="ugK8hu" name="camera.cpp" compile="1" resource="0" file="Source/camera.cpp"/>
+      <FILE id="CyyOe7" name="camera.h" compile="0" resource="0" file="Source/camera.h"/>
+      <FILE id="OnammK" name="canvas.cpp" compile="1" resource="0" file="Source/canvas.cpp"/>
+      <FILE id="HVDvSV" name="canvas.h" compile="0" resource="0" file="Source/canvas.h"/>
+      <FILE id="FIocb6" name="cursor.cpp" compile="1" resource="0" file="Source/cursor.cpp"/>
+      <FILE id="CtJKAq" name="cursor.h" compile="0" resource="0" file="Source/cursor.h"/>
+      <FILE id="jKMgfX" name="glwidget.cpp" compile="1" resource="0" file="Source/glwidget.cpp"/>
+      <FILE id="XEdUrV" name="glwidget.h" compile="0" resource="0" file="Source/glwidget.h"/>
+      <FILE id="BsUJVb" name="image.cpp" compile="1" resource="0" file="Source/image.cpp"/>
+      <FILE id="CvCdGT" name="image.h" compile="0" resource="0" file="Source/image.h"/>
+      <FILE id="KIHOD1" name="imagegpu.cpp" compile="1" resource="0" file="Source/imagegpu.cpp"/>
+      <FILE id="odX7XN" name="imagegpu.h" compile="0" resource="0" file="Source/imagegpu.h"/>
+      <FILE id="f3KTeK" name="io.cpp" compile="1" resource="0" file="Source/io.cpp"/>
+      <FILE id="CGELHt" name="io.h" compile="0" resource="0" file="Source/io.h"/>
+      <FILE id="ke6sXl" name="layer.cpp" compile="1" resource="0" file="Source/layer.cpp"/>
+      <FILE id="ePzjmM" name="layer.h" compile="0" resource="0" file="Source/layer.h"/>
+      <FILE id="idpNjL" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="DXDxya" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="PEocIG" name="mainshader.cpp" compile="1" resource="0" file="Source/mainshader.cpp"/>
+      <FILE id="Wc0OMZ" name="mainshader.h" compile="0" resource="0" file="Source/mainshader.h"/>
+      <FILE id="eZPv15" name="matrixd.cpp" compile="1" resource="0" file="Source/matrixd.cpp"/>
+      <FILE id="FHtkWW" name="matrixd.h" compile="0" resource="0" file="Source/matrixd.h"/>
+      <FILE id="OBQu4C" name="rectangle.h" compile="0" resource="0" file="Source/rectangle.h"/>
+      <FILE id="JuaunW" name="shaderprogram.cpp" compile="1" resource="0"
+            file="Source/shaderprogram.cpp"/>
+      <FILE id="hbo0Nj" name="shaderprogram.h" compile="0" resource="0" file="Source/shaderprogram.h"/>
+      <FILE id="ExprPC" name="sprite.h" compile="0" resource="0" file="Source/sprite.h"/>
+      <FILE id="qb6C1F" name="tile.cpp" compile="1" resource="0" file="Source/tile.cpp"/>
+      <FILE id="FI9i46" name="tile.h" compile="0" resource="0" file="Source/tile.h"/>
+      <FILE id="f9KTHD" name="vertex.cpp" compile="1" resource="0" file="Source/vertex.cpp"/>
+      <FILE id="aUyoDD" name="vertex.h" compile="0" resource="0" file="Source/vertex.h"/>
+      <FILE id="PHD0wh" name="virtualtilegrid.cpp" compile="1" resource="0"
+            file="Source/virtualtilegrid.cpp"/>
+      <FILE id="Cfq0Fw" name="virtualtilegrid.h" compile="0" resource="0"
+            file="Source/virtualtilegrid.h"/>
+      <FILE id="Egh8Ou" name="world.cpp" compile="1" resource="0" file="Source/world.cpp"/>
+      <FILE id="KNgGpM" name="world.h" compile="0" resource="0" file="Source/world.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="1" optimisation="1" targetName="lcLarki"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="0" optimisation="3" targetName="lcLarki"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Juce/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+    <VS2015 targetFolder="Builds/VisualStudio2015">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="lcLarki" libraryPath="C:\Users\light\Documents\glew-1.13.0\lib\Debug\Win32&#10;"
+                       headerPath="C:\Users\light\Documents\glew-1.13.0\include"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="3" targetName="lcLarki" libraryPath="C:\Users\light\Documents\glew-1.13.0\lib\Release\Win32&#10;"
+                       headerPath="C:\Users\light\Documents\glew-1.13.0\include"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Juce/modules"/>
+      </MODULEPATHS>
+    </VS2015>
+    <VS2010 targetFolder="Builds/VisualStudio2010">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="lcLarki"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="3" targetName="lcLarki"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Juce/modules"/>
+      </MODULEPATHS>
+    </VS2010>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
+                       targetName="lcLarki"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="3"
+                       targetName="lcLarki"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Juce/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="lcLarki"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="lcLarki"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Juce/modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS_WINDOWS>
+    <CODEBLOCKS_LINUX targetFolder="Builds/CodeBlocksLinux">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="lcLarki"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="lcLarki"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Juce/modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS_LINUX>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_ASIO="disabled" JUCE_WASAPI="disabled" JUCE_WASAPI_EXCLUSIVE="disabled"
+               JUCE_DIRECTSOUND="disabled" JUCE_ALSA="disabled" JUCE_JACK="disabled"
+               JUCE_USE_ANDROID_OPENSLES="disabled" JUCE_USE_CDREADER="disabled"
+               JUCE_MEDIAFOUNDATION="disabled" JUCE_QUICKTIME="disabled" JUCE_USE_CAMERA="disabled"/>
+</JUCERPROJECT>
