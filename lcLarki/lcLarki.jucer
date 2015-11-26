@@ -70,10 +70,10 @@
     <VS2015 targetFolder="Builds/VisualStudio2015">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="lcLarki" libraryPath="C:\Users\light\Documents\glew-1.13.0\lib\Debug\Win32&#10;"
+                       isDebug="1" optimisation="1" targetName="lcLarki" libraryPath=""
                        headerPath="C:\Users\light\Documents\glew-1.13.0\include"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="lcLarki" libraryPath="C:\Users\light\Documents\glew-1.13.0\lib\Release\Win32&#10;"
+                       isDebug="0" optimisation="3" targetName="lcLarki" libraryPath=""
                        headerPath="C:\Users\light\Documents\glew-1.13.0\include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
