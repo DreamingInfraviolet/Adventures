@@ -39,7 +39,6 @@ public:
 	math::vec2i mLastMousePosition;
 	math::vec2 mNormalisedMousePosition;
 	Cursor mCursor;
-	bool mLeftMousePressed, mRightMousePressed;
 
 	struct
 	{
@@ -65,10 +64,7 @@ public:
 		if (status != GLEW_OK)
 			throw std::runtime_error("Unable to initialise glew");
 
-		mLeftMousePressed = false;
-		mRightMousePressed = false;
-
-		glClearColor(0, 0, 0, 1);
+		glClearColor(0, 1, 0, 1);
 		mMainShader.load("shaders/main.vert", "shaders/main.frag");
 		initialiseQuad();
 
@@ -105,26 +101,14 @@ public:
 
     void render() override
     {
-        OpenGLHelpers::clear (Colours::black);
+		glClearColor(1, 1, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
 		beginDraw();
 		mCanvas.draw(mMainShader);
 		mCursor.draw(mCanvas.mCamera.matrix(), mMainShader);
 
 		endDraw();
     }
-
-	void mouseDown(const MouseEvent &e) override
-	{
-		mLeftMousePressed = e.mods.isLeftButtonDown();
-		mRightMousePressed = e.mods.isRightButtonDown();
-	}
-
-	void mouseUp(const MouseEvent& e) override
-	{
-		mLeftMousePressed = e.mods.isLeftButtonDown();
-		mRightMousePressed = e.mods.isRightButtonDown();
-	}
-
 	void mouseDrag(const MouseEvent& e) override
 	{
 		math::vec2i position = math::vec2i(e.x, e.y);
@@ -134,11 +118,11 @@ public:
 		//This is not wrong. The second part accounts for aspect ratio ^.^
 		delta /= this->getBounds().getWidth() / 2.f;
 
-		if (mRightMousePressed) //panning has priority.
+		if (e.mods.isRightButtonDown()) //panning has priority.
 		{
 			mCanvas.pan(delta.x, delta.y);
 		}
-		else if (mLeftMousePressed)
+		else if (e.mods.isLeftButtonDown())
 		{
 			mCanvas.applyBrush(mCursor.globalPos());
 		}
