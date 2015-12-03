@@ -18,7 +18,7 @@ def generate(N, G) :
     zdeclare("N") #Nuber of queens
     zdeclare("G") #Board size
     zassert("= N {}".format(N)) #Init N
-    zassert("= G {}".format(G)) #Init N
+    zassert("= G {}".format(G)) #Init G
 
     #Generate queen names
     queensX = ["P{}_x".format(n) for n in range(0, N) ]
