@@ -33,8 +33,8 @@ int main(int argc, char* argv[])
 			cout << "Cannot read a frame from video stream" << endl;
 			break;
 		}
-
-
+		
+		blur(frame, frame, Size(50,50));
 		imshow("MyVideo", frame); //show the frame in "MyVideo" window
 
 		if (waitKey(30) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop

@@ -7,4 +7,4 @@ file(GLOB HEADERS include/*)
 
 include_directories(${HEADERS})
 add_executable(Fabula ${CSOURCES} ${CPPSOURCES} ${HEADERS})
-include_directories(include)  
+include_directories(include)

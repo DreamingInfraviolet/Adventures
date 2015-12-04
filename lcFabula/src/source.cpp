@@ -1,13 +1,36 @@
 #include <stdio.h>
-#include "tokens.h"
-#include "fabula.h"
+#include <iostream>
+#include <string>
+#include "XmlHelper.h"
+using namespace std;
 
 int main(int argc, char** argv)
 {
-    printf("Running Fabula\n");
+    cout<<("Running Fabula\n");
 
+	XmlHelper xml;
+
+	xml.start("html");
+	xml.start("head");
+	xml.start("title");
+	xml.line("Testing");
+	xml.end();
+	xml.end();
+	xml.start("body");
+	xml.start("p");
+	xml.start("a", { {"src", "help.html"}, {"alt","What?"} });
+	xml.end();
+	xml.start("a", { {"src","halp.html"} });
+	xml.end();
+	xml.end();
+	xml.end();
+	xml.end();
+
+	cout << xml.str();
+
+	/*
 	fabula::World world;
-	fabula::ParseResult::Type result1 = world.parse
+	world.parse
 		(
 			"scene Start "
 			"{"
@@ -15,12 +38,9 @@ int main(int argc, char** argv)
 			"choice \"Jump\" \"Description!\\\"\" goto <-->End "
 			"}\n"
 			"scene End { \"Yo\" \"Yooo\" goto Start2 }"
-			).type;
+			);
 
-	if (result1 != fabula::ParseResult::Type::EOK)
-		return 1;
-
-	fabula::ParseResult::Type result2 = world.parse
+	world.parse
 		(
 			"scene Start2 "
 			"{"
@@ -28,14 +48,14 @@ int main(int argc, char** argv)
 			"choice \"Jump\" \"Description!\\\"\" goto <-->End2 "
 			"}\n"
 			"scene End2 { \"Yo\" \"Yooo\" }"
-			).type;
+			);
 
-	if (result2 != fabula::ParseResult::Type::EOK)
-		return 2;
 
-	fabula::ParseResult::Type result3 = world.verify().type;
-	if (result3 != fabula::ParseResult::Type::EOK)
-		return 3;
+	if (!world.verify())
+		return 1;
+
+	string xml = world.xml();
+	*/
  
 	printf("Fabula done\n");
 }

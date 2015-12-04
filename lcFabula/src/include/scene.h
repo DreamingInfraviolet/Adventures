@@ -14,7 +14,6 @@ namespace fabula
         String mName;
         Content mContent;
 		std::vector<Choice> mChoices;
-		Destionation mDefaultDestination;
         Section* mParent;
 		int mLine;
         bool mFinal;
@@ -38,6 +37,5 @@ namespace fabula
 
 		void addChoice(const Choice& choice) { mChoices.push_back(choice); }
 
-		void setDefaultDestination(const Destination& dest) { mDefaultDestination = dest; }
     };
 }

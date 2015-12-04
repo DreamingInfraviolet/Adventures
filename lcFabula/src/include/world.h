@@ -7,15 +7,13 @@ namespace fabula
     class World
     {
         class Section;
+		class Destination;
 		class Scene;
 
         unsigned int id;
         Section* root;
 
-		/** Merges the inputted world into this. */
-		void merge(const World& newWorld);
-
-		void operator=(const World& w){}
+		void operator=(const World& w) = delete;
 
 		friend class Parser;
 
@@ -30,7 +28,7 @@ namespace fabula
 		void parse(const std::string& str);
 
 		/** Verifies that all the scripts parsed so far have made sense. */
-		void verify() const;
+		bool verify() const;
 
 		unsigned addScene(const Scene& scene)
 		{
@@ -38,9 +36,14 @@ namespace fabula
 			return mScenes.size()-1;
 		}
 
+		/** Merges the inputted world into this. */
+		void merge(const World& newWorld);
+
 		Scene& getScene(unsigned id)
 		{
 			return mScenes[id];
 		}
+
+		Scene& getScene(const Destination& d);
     };
 }

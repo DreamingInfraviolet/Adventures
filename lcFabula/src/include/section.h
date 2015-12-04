@@ -1,6 +1,5 @@
 #pragma once
 #include "fstring.h"
-#include "result.h"
 #include <map>
 
 namespace fabula
