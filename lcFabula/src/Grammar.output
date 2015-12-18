@@ -1,0 +1,476 @@
+Terminals unused in grammar
+
+   teof
+   terror
+   tbracket_square_open
+   tbracket_square_close
+   tignore
+   tfullstop
+
+
+State 22 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: S $end
+
+    1 S: SECTION
+
+    2 SECTION_DECLARATION: tidentifier
+
+    3 SECTION: /* empty */
+    4        | SECTION_DECLARATION SECTION
+    5        | SCENE_DECLARATION SECTION
+
+    6 SCENE_DECLARATION: tscene tidentifier tbracket_curly_open SCENE tbracket_curly_close
+
+    7 SCENE: HEADER CHOICES
+
+    8 HEADER: TITLE DESCRIPTION
+
+    9 TITLE: tstring
+
+   10 DESCRIPTION: /* empty */
+   11            | tstring
+
+   12 CHOICES: GOTO
+   13        | CHOICE_LIST
+
+   14 CHOICE_LIST: CHOICE CHOICE_LIST
+   15            | GOTO
+
+   16 CHOICE: tchoice tbracket_curly_open tstring HEADER tbracket_curly_close
+
+   17 GOTO: tgoto LOCATION
+
+   18 LOCATION_PREFIX: tarrow_right
+   19                | LOCATION_PREFIX2
+
+   20 LOCATION_PREFIX2: /* empty */
+   21                 | tarrow_left LOCATION_PREFIX2
+
+   22 LOCATION_BODY: tidentifier LOCATION_BODY
+   23              | tidentifier tarrow_left
+   24              | tidentifier tarrow_right
+
+   25 LOCATION: LOCATION_PREFIX LOCATION_BODY
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+teof (258)
+terror (259)
+tarrow_left (260) 21 23
+tarrow_right (261) 18 24
+tbracket_curly_open (262) 6 16
+tbracket_curly_close (263) 6 16
+tbracket_square_open (264)
+tbracket_square_close (265)
+tscene (266) 6
+tidentifier (267) 2 6 22 23 24
+tstring (268) 9 11 16
+tignore (269)
+tchoice (270) 16
+tgoto (271) 17
+tfullstop (272)
+
+
+Nonterminals, with rules where they appear
+
+$accept (18)
+    on left: 0
+S (19)
+    on left: 1, on right: 0
+SECTION_DECLARATION (20)
+    on left: 2, on right: 4
+SECTION (21)
+    on left: 3 4 5, on right: 1 4 5
+SCENE_DECLARATION (22)
+    on left: 6, on right: 5
+SCENE (23)
+    on left: 7, on right: 6
+HEADER (24)
+    on left: 8, on right: 7 16
+TITLE (25)
+    on left: 9, on right: 8
+DESCRIPTION (26)
+    on left: 10 11, on right: 8
+CHOICES (27)
+    on left: 12 13, on right: 7
+CHOICE_LIST (28)
+    on left: 14 15, on right: 13 14
+CHOICE (29)
+    on left: 16, on right: 14
+GOTO (30)
+    on left: 17, on right: 12 15
+LOCATION_PREFIX (31)
+    on left: 18 19, on right: 25
+LOCATION_PREFIX2 (32)
+    on left: 20 21, on right: 19 21
+LOCATION_BODY (33)
+    on left: 22 23 24, on right: 22 25
+LOCATION (34)
+    on left: 25, on right: 17
+
+
+State 0
+
+    0 $accept: . S $end
+
+    tscene       shift, and go to state 1
+    tidentifier  shift, and go to state 2
+
+    $default  reduce using rule 3 (SECTION)
+
+    S                    go to state 3
+    SECTION_DECLARATION  go to state 4
+    SECTION              go to state 5
+    SCENE_DECLARATION    go to state 6
+
+
+State 1
+
+    6 SCENE_DECLARATION: tscene . tidentifier tbracket_curly_open SCENE tbracket_curly_close
+
+    tidentifier  shift, and go to state 7
+
+
+State 2
+
+    2 SECTION_DECLARATION: tidentifier .
+
+    $default  reduce using rule 2 (SECTION_DECLARATION)
+
+
+State 3
+
+    0 $accept: S . $end
+
+    $end  shift, and go to state 8
+
+
+State 4
+
+    4 SECTION: SECTION_DECLARATION . SECTION
+
+    tscene       shift, and go to state 1
+    tidentifier  shift, and go to state 2
+
+    $default  reduce using rule 3 (SECTION)
+
+    SECTION_DECLARATION  go to state 4
+    SECTION              go to state 9
+    SCENE_DECLARATION    go to state 6
+
+
+State 5
+
+    1 S: SECTION .
+
+    $default  reduce using rule 1 (S)
+
+
+State 6
+
+    5 SECTION: SCENE_DECLARATION . SECTION
+
+    tscene       shift, and go to state 1
+    tidentifier  shift, and go to state 2
+
+    $default  reduce using rule 3 (SECTION)
+
+    SECTION_DECLARATION  go to state 4
+    SECTION              go to state 10
+    SCENE_DECLARATION    go to state 6
+
+
+State 7
+
+    6 SCENE_DECLARATION: tscene tidentifier . tbracket_curly_open SCENE tbracket_curly_close
+
+    tbracket_curly_open  shift, and go to state 11
+
+
+State 8
+
+    0 $accept: S $end .
+
+    $default  accept
+
+
+State 9
+
+    4 SECTION: SECTION_DECLARATION SECTION .
+
+    $default  reduce using rule 4 (SECTION)
+
+
+State 10
+
+    5 SECTION: SCENE_DECLARATION SECTION .
+
+    $default  reduce using rule 5 (SECTION)
+
+
+State 11
+
+    6 SCENE_DECLARATION: tscene tidentifier tbracket_curly_open . SCENE tbracket_curly_close
+
+    tstring  shift, and go to state 12
+
+    SCENE   go to state 13
+    HEADER  go to state 14
+    TITLE   go to state 15
+
+
+State 12
+
+    9 TITLE: tstring .
+
+    $default  reduce using rule 9 (TITLE)
+
+
+State 13
+
+    6 SCENE_DECLARATION: tscene tidentifier tbracket_curly_open SCENE . tbracket_curly_close
+
+    tbracket_curly_close  shift, and go to state 16
+
+
+State 14
+
+    7 SCENE: HEADER . CHOICES
+
+    tchoice  shift, and go to state 17
+    tgoto    shift, and go to state 18
+
+    CHOICES      go to state 19
+    CHOICE_LIST  go to state 20
+    CHOICE       go to state 21
+    GOTO         go to state 22
+
+
+State 15
+
+    8 HEADER: TITLE . DESCRIPTION
+
+    tstring  shift, and go to state 23
+
+    $default  reduce using rule 10 (DESCRIPTION)
+
+    DESCRIPTION  go to state 24
+
+
+State 16
+
+    6 SCENE_DECLARATION: tscene tidentifier tbracket_curly_open SCENE tbracket_curly_close .
+
+    $default  reduce using rule 6 (SCENE_DECLARATION)
+
+
+State 17
+
+   16 CHOICE: tchoice . tbracket_curly_open tstring HEADER tbracket_curly_close
+
+    tbracket_curly_open  shift, and go to state 25
+
+
+State 18
+
+   17 GOTO: tgoto . LOCATION
+
+    tarrow_left   shift, and go to state 26
+    tarrow_right  shift, and go to state 27
+
+    $default  reduce using rule 20 (LOCATION_PREFIX2)
+
+    LOCATION_PREFIX   go to state 28
+    LOCATION_PREFIX2  go to state 29
+    LOCATION          go to state 30
+
+
+State 19
+
+    7 SCENE: HEADER CHOICES .
+
+    $default  reduce using rule 7 (SCENE)
+
+
+State 20
+
+   13 CHOICES: CHOICE_LIST .
+
+    $default  reduce using rule 13 (CHOICES)
+
+
+State 21
+
+   14 CHOICE_LIST: CHOICE . CHOICE_LIST
+
+    tchoice  shift, and go to state 17
+    tgoto    shift, and go to state 18
+
+    CHOICE_LIST  go to state 31
+    CHOICE       go to state 21
+    GOTO         go to state 32
+
+
+State 22
+
+   12 CHOICES: GOTO .
+   15 CHOICE_LIST: GOTO .
+
+    tbracket_curly_close  reduce using rule 12 (CHOICES)
+    tbracket_curly_close  [reduce using rule 15 (CHOICE_LIST)]
+    $default              reduce using rule 12 (CHOICES)
+
+
+State 23
+
+   11 DESCRIPTION: tstring .
+
+    $default  reduce using rule 11 (DESCRIPTION)
+
+
+State 24
+
+    8 HEADER: TITLE DESCRIPTION .
+
+    $default  reduce using rule 8 (HEADER)
+
+
+State 25
+
+   16 CHOICE: tchoice tbracket_curly_open . tstring HEADER tbracket_curly_close
+
+    tstring  shift, and go to state 33
+
+
+State 26
+
+   21 LOCATION_PREFIX2: tarrow_left . LOCATION_PREFIX2
+
+    tarrow_left  shift, and go to state 26
+
+    $default  reduce using rule 20 (LOCATION_PREFIX2)
+
+    LOCATION_PREFIX2  go to state 34
+
+
+State 27
+
+   18 LOCATION_PREFIX: tarrow_right .
+
+    $default  reduce using rule 18 (LOCATION_PREFIX)
+
+
+State 28
+
+   25 LOCATION: LOCATION_PREFIX . LOCATION_BODY
+
+    tidentifier  shift, and go to state 35
+
+    LOCATION_BODY  go to state 36
+
+
+State 29
+
+   19 LOCATION_PREFIX: LOCATION_PREFIX2 .
+
+    $default  reduce using rule 19 (LOCATION_PREFIX)
+
+
+State 30
+
+   17 GOTO: tgoto LOCATION .
+
+    $default  reduce using rule 17 (GOTO)
+
+
+State 31
+
+   14 CHOICE_LIST: CHOICE CHOICE_LIST .
+
+    $default  reduce using rule 14 (CHOICE_LIST)
+
+
+State 32
+
+   15 CHOICE_LIST: GOTO .
+
+    $default  reduce using rule 15 (CHOICE_LIST)
+
+
+State 33
+
+   16 CHOICE: tchoice tbracket_curly_open tstring . HEADER tbracket_curly_close
+
+    tstring  shift, and go to state 12
+
+    HEADER  go to state 37
+    TITLE   go to state 15
+
+
+State 34
+
+   21 LOCATION_PREFIX2: tarrow_left LOCATION_PREFIX2 .
+
+    $default  reduce using rule 21 (LOCATION_PREFIX2)
+
+
+State 35
+
+   22 LOCATION_BODY: tidentifier . LOCATION_BODY
+   23              | tidentifier . tarrow_left
+   24              | tidentifier . tarrow_right
+
+    tarrow_left   shift, and go to state 38
+    tarrow_right  shift, and go to state 39
+    tidentifier   shift, and go to state 35
+
+    LOCATION_BODY  go to state 40
+
+
+State 36
+
+   25 LOCATION: LOCATION_PREFIX LOCATION_BODY .
+
+    $default  reduce using rule 25 (LOCATION)
+
+
+State 37
+
+   16 CHOICE: tchoice tbracket_curly_open tstring HEADER . tbracket_curly_close
+
+    tbracket_curly_close  shift, and go to state 41
+
+
+State 38
+
+   23 LOCATION_BODY: tidentifier tarrow_left .
+
+    $default  reduce using rule 23 (LOCATION_BODY)
+
+
+State 39
+
+   24 LOCATION_BODY: tidentifier tarrow_right .
+
+    $default  reduce using rule 24 (LOCATION_BODY)
+
+
+State 40
+
+   22 LOCATION_BODY: tidentifier LOCATION_BODY .
+
+    $default  reduce using rule 22 (LOCATION_BODY)
+
+
+State 41
+
+   16 CHOICE: tchoice tbracket_curly_open tstring HEADER tbracket_curly_close .
+
+    $default  reduce using rule 16 (CHOICE)

@@ -29,19 +29,25 @@
 
 %%
 
-S:SECTION;
+S                   : SECTION;
 
-SECTION_DECLARATION : [ tidentifier ] SECTION;
+SECTION_DECLARATION : tidentifier [ SECTION ];
 
-SECTION             :|
+SECTION             :
                      | SECTION_DECLARATION SECTION
-                     | tscene tidentifier tbracket_curly_open SCENE tbracket_curly_close SECTION;
+                     | SCENE_DECLARATION SECTION
+
+
+SCENE_DECLARATION   :tscene tidentifier tbracket_curly_open SCENE tbracket_curly_close;
 
 SCENE               : HEADER CHOICES;
 
 //The header is a title with an optional description.
-HEADER              : tstring
-                    | tstring tstring;
+HEADER              : TITLE DESCRIPTION;
+
+TITLE               : tstring
+OPT_DESCRIPTION     : | DESCRIPTION;
+DESCRIPTION         : tstring
 
 CHOICES             : GOTO
                     | CHOICE_LIST;
@@ -56,8 +62,7 @@ GOTO                : tgoto LOCATION;
 LOCATION_PREFIX      : tarrow_right |
                       LOCATION_PREFIX2;
 
-LOCATION_PREFIX2     : tarrow_left
-                     | LOCATION_PREFIX2;
+LOCATION_PREFIX2     : |tarrow_left LOCATION_PREFIX2;
 
 LOCATION_BODY        : tidentifier LOCATION_BODY
                      | tidentifier tarrow_left
