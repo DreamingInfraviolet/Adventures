@@ -1,13 +1,19 @@
 #pragma once
-#include "content.h"
+#include "header.h"
+#include "destination.h"
 
 namespace fabula
 {
     class Scene;
 
+
     class Choice
     {
-        Content content;
-        Scene* target;
+        Header mHeader;
+		Destination mDestination;
+
+	public:
+		Choice(const Header& header, const Destination& destination)
+			: mHeader(header), mDestination(destination) {}
     };
 }

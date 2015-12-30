@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "fstring.h"
-#include "content.h"
+#include "header.h"
 #include "choice.h"
 #include "destination.h"
 
@@ -11,31 +11,29 @@ namespace fabula
 
     class Scene
     {
-        String mName;
-        Content mContent;
+		std::string mName;
+        Header mContent;
 		std::vector<Choice> mChoices;
-        Section* mParent;
-		int mLine;
+		Destination mDestination;
         bool mFinal;
 		
-
 	public:
 
-		Scene(int line, Section* parent) : mLine(line), mParent(parent), mFinal(true) {}
+		Scene() :  mFinal(true) {}
 
-		void setContent(const Content& content) { mContent = content; }
+		Scene(const std::vector<Choice>&& choices)
+			: mChoices(choices) {}
 
-		void setName(const String& str) { mName = str; }
+		Scene(const Destination& destination)
+			: mDestination(destination) {}
 
-		int line() const { return mLine; }
+
+		void header(const Header& content) { mContent = content; }
+
+		void name(const std::string& str) { mName = str; }
 
 		bool final() const { return mFinal; }
 
-		Section* parent() const { return mParent; }
-
-		String name() const { return mName; }
-
-		void addChoice(const Choice& choice) { mChoices.push_back(choice); }
-
+		std::string name() const { return mName; }
     };
 }

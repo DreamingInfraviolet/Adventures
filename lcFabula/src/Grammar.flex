@@ -2,8 +2,6 @@
  #include "Grammar.tab.h"   
 %}
 
-ARROWRIGHT ->
-ARROWLEFT <-
 IDENTIFIER [a-zA-Z_]+ ([0-9] | [a-zA-Z_])*
 
 WHITESPACE [ \t\n\r]
@@ -16,20 +14,19 @@ WHITESPACE [ \t\n\r]
  
         // Warning: Use double quotes for literals!
 
-"->"    return tarrow_right;
-"<-"    return tarrow_left;
-"{"       return tbracket_curly_open; 
-"}"       return tbracket_curly_close;
-"["       return tbracket_square_open;
-"]"       return tbracket_square_close;
-"scene"       return tscene;
-"choice"        return tchoice;
-[A-Za-z_]+([a-za-z0-9_])*       return tidentifier;
-(\"([^\"\\]|(\\[a-za-z\"]))*\")|(\'([^\'\\]|(\\[a-za-z\']))*\')       return tstring;
-<<EOF>>       return teof;
-[ \t\n\r]       return tignore;
-"."     return tfullstop;
-.       return terror;
+"/"       { *((std::string*)&yyval) = yytext; return tdiv; }
+"{"       { *((std::string*)&yyval) = yytext;  return tbracket_curly_open;  }
+"}"       { *((std::string*)&yyval) = yytext;  return tbracket_curly_close; }
+"["       { *((std::string*)&yyval) = yytext;  return tbracket_square_open; }
+"]"       { *((std::string*)&yyval) = yytext;  return tbracket_square_close; }
+"scene"       { *((std::string*)&yyval) = yytext;  return tscene; }
+"choice"        { *((std::string*)&yyval) = yytext;  return tchoice; }
+[A-Za-z_]+([a-za-z0-9_])*       { *((std::string*)&yyval) = yytext;  return tidentifier; }
+(\"([^\"\\]|(\\[a-za-z\"]))*\")|(\'([^\'\\]|(\\[a-za-z\']))*\')       { *((std::string*)&yyval) = yytext;  return tstring; }
+<<EOF>>       { *((std::string*)&yyval) = yytext;  return teof; }
+[ \t\n\r]       { *((std::string*)&yyval) = yytext;  return tignore; }
+"."     { *((std::string*)&yyval) = yytext;  return tfullstop; }
+.       { *((std::string*)&yyval) = yytext;  return terror; }
 %%
   
 // By default functions are extern. So you can create a header file with

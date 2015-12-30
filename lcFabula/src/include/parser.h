@@ -24,7 +24,7 @@ namespace fabula
 		//Parses header/description strings or only the descriptin based on what exists.
 		//Starts at string
 		//and ends at the second string.
-		Content enterContentStrings();
+		Header enterContentStrings();
 		//Starts at the choice keyword
 		//Ends after
 		Choice enterChoice();
