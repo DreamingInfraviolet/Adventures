@@ -1,32 +1,31 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include "XmlHelper.h"
+#include <sstream>
+#include "FlexLexer.h"
+
 using namespace std;
+extern int yyparse();
+
+std::istringstream inputStream("hi []");
+std::ostringstream outputStream;
+
+yyFlexLexer lexer(&inputStream, &outputStream);
+
+
+int yylex()
+{
+	return lexer.yylex();
+}
+
+extern int yydebug;
 
 int main(int argc, char** argv)
 {
-    cout<<("Running Fabula\n");
+    cout<<"Running Fabula\n";
+	yydebug = 0;
+	yyparse();
 
-	XmlHelper xml;
-
-	xml.start("html");
-	xml.start("head");
-	xml.start("title");
-	xml.line("Testing");
-	xml.end();
-	xml.end();
-	xml.start("body");
-	xml.start("p");
-	xml.start("a", { {"src", "help.html"}, {"alt","What?"} });
-	xml.end();
-	xml.start("a", { {"src","halp.html"} });
-	xml.end();
-	xml.end();
-	xml.end();
-	xml.end();
-
-	cout << xml.str();
 
 	/*
 	fabula::World world;
@@ -57,5 +56,5 @@ int main(int argc, char** argv)
 	string xml = world.xml();
 	*/
  
-	printf("Fabula done\n");
+ 	cout << "Fabula done\n";
 }

@@ -10,12 +10,20 @@ namespace fabula
     class Section
     {
 		std::string mName;
-		std::vector<Scene> mScenes;
-		std::vector<Section> mSubsections;
+		std::vector<Scene*> mScenes;
+		std::vector<Section*> mSubsections;
 
 	public:
 
 		Section() {}
+
+		~Section()
+		{
+			for (Scene* s : mScenes)
+				delete s;
+			for (Section* s : mSubsections)
+				delete s;
+		}
 
 		void name(const std::string& name)
 		{
@@ -24,12 +32,12 @@ namespace fabula
 
 		std::string name() const { return mName; }
 
-		void add(const Section& s)
+		void add(Section* s)
 		{
 			mSubsections.push_back(s);
 		}
 
-		void add(const Scene& s)
+		void add(Scene* s)
 		{
 			mScenes.push_back(s);
 		}

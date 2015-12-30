@@ -45,5 +45,10 @@ namespace fabula
 		{
 			return mRelative;
 		}
+
+		void relative(bool r)
+		{
+			mRelative = r;
+		}
 	};
 }

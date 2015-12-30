@@ -9,11 +9,18 @@ namespace fabula
 
     class Choice
     {
-        Header mHeader;
-		Destination mDestination;
+        Header* mHeader = nullptr;
+		Destination* mDestination = nullptr;
 
 	public:
-		Choice(const Header& header, const Destination& destination)
+		//Takes ownership of arguments
+		Choice(Header* header, Destination* destination)
 			: mHeader(header), mDestination(destination) {}
+
+		~Choice()
+		{
+			delete mHeader;
+			delete mDestination;
+		}
     };
 }
