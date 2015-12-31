@@ -16,21 +16,32 @@ namespace fabula
             {
             public:
 
-                enum class NodeType { Section, Scene, Choice, Destination, String };
+                enum class NodeType { Section, Scene, Choice, Destination, String, Header };
 
                 /** Returns the corresponding node type of the class. */
                 virtual NodeType nodeType() = 0;
 
-                /** Notifies all children that this is the parent, and calls bindChildren on them. */
-                virtual void bindChildren() = 0;
+                /** Sets the parent of the object and prompts it to set itself as a parent to its children. */
+				void bindParent(ParseNode* parent)
+				{
+					mParent = parent;
+					bindChildren();
+				}
+
+				/** Calls bindParent on all its children. */
+				virtual void bindChildren() = 0;
 
                 /** Performs semantic error detection, throwing an exception if failed. */
                 virtual void checkSemantics() = 0;
 
-            protected:
-
+			private:
                 // The parent, if any.
-                ParaseNode* parent = nullptr;
+				ParseNode* mParent = nullptr;
+
+			public:
+
+				ParseNode* parent() { return mParent; }
+
             }; 
         }
     }

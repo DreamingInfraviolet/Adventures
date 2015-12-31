@@ -2,11 +2,12 @@
 
 /**
   * @author Anima Seteine
-  * @purpose This class holds the information about a section object.
+  * @purpose This class holds the information about a section object. A section can contain scenes, or subsections.
   */
 
 #include <vector>
 #include <string>
+#include "parse_node.h"
 
 namespace fabula
 {
@@ -16,7 +17,7 @@ namespace fabula
         {
 			class Scene;
 
-		    class Section
+		    class Section : public ParseNode
 		    {
 				std::string           mName;
 				std::vector<Scene*>   mScenes;
@@ -41,6 +42,15 @@ namespace fabula
 
 				/** Adds a child scene, taking ownership of the argument. */
 				void add(Scene* s);
+
+				/** Returns the corresponding node type of the class. */
+				virtual NodeType nodeType();
+
+				/** Notifies all children that this is the parent, and calls bindChildren on them. */
+				virtual void bindChildren();
+
+				/** Performs semantic error detection, throwing an exception if failed. */
+				virtual void checkSemantics();
 		    };
 		}
 	}

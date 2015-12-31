@@ -1,4 +1,8 @@
 #include "scene.h"
+#include "header.h"
+#include "choice.h"
+#include "destination.h"
+#include <cassert>
 
 namespace fabula
 {
@@ -20,14 +24,14 @@ namespace fabula
                     for (Choice* c : *mChoices)
                         delete c;
                 delete mChoices;
-                delete mContent;
+                delete mHeader;
                 delete mDestination;
             }
 
             void Scene::header(Header* content)
             {
-                delete mContent;
-                mContent = content;
+                delete mHeader;
+                mHeader = content;
             }
 
             void Scene::name(const std::string& str)
@@ -44,6 +48,31 @@ namespace fabula
             {
                 return mName;
             }
+
+			ParseNode::NodeType Scene::nodeType()
+			{
+				return NodeType::Scene;
+			}
+
+			void Scene::bindChildren()
+			{
+				if (mHeader)
+					mHeader->bindParent(this);
+
+				if (mChoices)
+					for (Choice* choice : *mChoices)
+					{
+						assert(choice);
+						choice->bindParent(this);
+					}
+
+				if (mDestination)
+					mDestination->bindParent(this);
+			}
+
+			void Scene::checkSemantics()
+			{
+			}
         }
     }
 }

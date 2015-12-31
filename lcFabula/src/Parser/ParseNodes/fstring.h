@@ -6,6 +6,7 @@
   */
 
 #include <string>
+#include "parse_node.h"
 
 
 namespace fabula
@@ -14,7 +15,7 @@ namespace fabula
     {
         namespace node
         {
-            class String
+            class String : public ParseNode
             {
                 std::string _str;
 
@@ -30,6 +31,15 @@ namespace fabula
 
                 /** Returns the internal std::string object. */
         		const std::string& str() const;
+
+				/** Returns the corresponding node type of the class. */
+				virtual NodeType nodeType();
+
+				/** Notifies all children that this is the parent, and calls bindChildren on them. */
+				virtual void bindChildren();
+
+				/** Performs semantic error detection, throwing an exception if failed. */
+				virtual void checkSemantics();
             };
         }
     }

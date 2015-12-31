@@ -1,4 +1,5 @@
 #include "destination.h"
+#include <cassert>
 
 namespace fabula
 {
@@ -35,6 +36,19 @@ namespace fabula
 			bool Destination::relative()
 			{
 				return mRelative;
+			}
+
+			ParseNode::NodeType Destination::nodeType()
+			{
+				return NodeType::Destination;
+			}
+
+			void Destination::bindChildren()
+			{
+			}
+
+			void Destination::checkSemantics()
+			{
 			}
 
 			void Destination::relative(bool r)

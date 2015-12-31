@@ -16,7 +16,7 @@ std::istringstream inputStream(
 	"\"Header\" \"Body\"\n"
 	"choice { \"Jump\" \"Description!\\\"\" goto .End\n }"
 	"}\n"
-	"scene End { \"Yo\" \"Yooo\" goto Start2 }");
+	"scene End { \"Yo\" \"Yooo\" goto Start2 }");	
 std::ostringstream outputStream;
 
 yyFlexLexer lexer(&inputStream, &outputStream);
@@ -32,8 +32,9 @@ extern int yydebug;
 int main(int argc, char** argv)
 {
     cout<<"Running Fabula\n";
-	yydebug = 1;
+	yydebug = 0;
 	yyparse();
+
 
 	/*
 	fabula::World world;

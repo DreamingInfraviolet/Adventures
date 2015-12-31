@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include "parse_node.h"
 
 namespace fabula
 {
@@ -15,7 +16,7 @@ namespace fabula
     {
         namespace node
         {
-			class Destination
+			class Destination : public ParseNode
 			{
 				std::vector<std::string> mLocationChain;
 				int                 mBacksteps      = 0;
@@ -45,6 +46,15 @@ namespace fabula
 
 				/** Returns true if the destination is relative to its parent scene. */
 				bool relative();
+
+				/** Returns the corresponding node type of the class. */
+				virtual NodeType nodeType();
+
+				/** Notifies all children that this is the parent, and calls bindChildren on them. */
+				virtual void bindChildren();
+
+				/** Performs semantic error detection, throwing an exception if failed. */
+				virtual void checkSemantics();
 			};
 		}
 	}

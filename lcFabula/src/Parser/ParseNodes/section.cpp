@@ -1,5 +1,6 @@
 #include "section.h"
 #include "scene.h"
+#include <cassert>
 
 namespace fabula
 {
@@ -36,6 +37,29 @@ namespace fabula
             {
                 mScenes.push_back(s);
             }
+
+			ParseNode::NodeType Section::nodeType()
+			{
+				return NodeType::Section;
+			}
+
+			void Section::bindChildren()
+			{
+				for (Scene* s : mScenes)
+				{
+					assert(s);
+					s->bindParent(this);
+				}
+				for (Section* s : mSubsections)
+				{
+					assert(s);
+					s->bindParent(this);
+				}
+			}
+
+			void Section::checkSemantics()
+			{
+			}
         }
     }
 }
