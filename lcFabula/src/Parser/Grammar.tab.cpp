@@ -68,10 +68,13 @@
     //Custom code goes here
     #include <string>
     #include <vector>
-    #include "choice.h"
-    #include "section.h"
-    #include "scene.h"
-    using namespace fabula;
+    #include "ParseNodes/choice.h"
+    #include "ParseNodes/section.h"
+    #include "ParseNodes/scene.h"
+    #include "ParseNodes/fstring.h"
+    #include "ParseNodes/header.h"
+    #include "ParseNodes/destination.h"
+    using namespace fabula::parsing::node;
 
     void yyerror (char const *s);
 
@@ -82,9 +85,10 @@
     #define YYDEBUG 1
 
     extern int flexLineNo;
+    extern Section* parseResult;
 
 /* Line 371 of yacc.c  */
-#line 88 "Grammar.tab.cpp"
+#line 92 "Grammar.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -126,12 +130,12 @@ extern int yydebug;
      tbracket_square_open = 261,
      tbracket_square_close = 262,
      tscene = 263,
-     tidentifier = 264,
-     tstring = 265,
-     tignore = 266,
-     tchoice = 267,
-     tgoto = 268,
-     tfullstop = 269
+     tignore = 264,
+     tchoice = 265,
+     tgoto = 266,
+     tfullstop = 267,
+     tidentifier = 268,
+     tstring = 269
    };
 #endif
 
@@ -140,10 +144,10 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 23 "Grammar.ypp"
+#line 27 "Grammar.ypp"
 
-    char*                charstrval;
     std::string*         stringval;
+    char*                charstrval;
     Section*             sectionval;
     String*              fstringval;
     Scene*               sceneval;
@@ -155,7 +159,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 159 "Grammar.tab.cpp"
+#line 163 "Grammar.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -196,7 +200,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 200 "Grammar.tab.cpp"
+#line 204 "Grammar.tab.cpp"
 
 #ifdef short
 # undef short
@@ -418,7 +422,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   26
+#define YYLAST   29
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  15
@@ -482,20 +486,20 @@ static const yytype_uint8 yyprhs[] =
 static const yytype_int8 yyrhs[] =
 {
       16,     0,    -1,    17,    -1,    -1,    18,    17,    -1,    19,
-      17,    -1,     9,     6,    17,     7,    -1,     8,     9,     4,
+      17,    -1,    13,     6,    17,     7,    -1,     8,    13,     4,
       20,     5,    -1,    22,    21,    -1,    23,    -1,    25,    -1,
-      10,    -1,    10,    10,    -1,    -1,    23,    24,    -1,    12,
-       4,    22,    25,     5,    -1,    13,    26,    -1,    27,    28,
-      -1,    27,     3,    28,    -1,    -1,    27,    14,    -1,    28,
-       3,     9,    -1,     9,    -1
+      14,    -1,    14,    14,    -1,    -1,    23,    24,    -1,    10,
+       4,    22,    25,     5,    -1,    11,    26,    -1,    27,    28,
+      -1,    27,     3,    28,    -1,    -1,    27,    12,    -1,    28,
+       3,    13,    -1,    13,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    68,    68,    71,    72,    73,    75,    78,    82,    84,
-      85,    87,    88,    90,    91,    94,    97,    99,   100,   102,
-     103,   106,   107
+       0,    74,    74,    77,    78,    79,    81,    84,    86,    88,
+      89,    91,    92,    95,    96,    99,   101,   103,   104,   106,
+     107,   110,   112
 };
 #endif
 
@@ -506,8 +510,8 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "tdiv", "tbracket_curly_open",
   "tbracket_curly_close", "tbracket_square_open", "tbracket_square_close",
-  "tscene", "tidentifier", "tstring", "tignore", "tchoice", "tgoto",
-  "tfullstop", "$accept", "S", "SECTION", "SECTION_DECLARATION",
+  "tscene", "tignore", "tchoice", "tgoto", "tfullstop", "tidentifier",
+  "tstring", "$accept", "S", "SECTION", "SECTION_DECLARATION",
   "SCENE_DECLARATION", "SCENE", "SCENE_POSTHEADER", "HEADER",
   "CHOICE_LIST", "CHOICE", "GOTO", "LOCATION", "LOCATION_PREFIX",
   "LOCATION_BODY", YY_NULL
@@ -547,8 +551,8 @@ static const yytype_uint8 yydefact[] =
 {
        3,     0,     0,     0,     2,     3,     3,     0,     3,     1,
        4,     5,     0,     0,    11,     0,    13,     6,    12,     7,
-      19,     8,     9,    10,    16,     0,     0,    14,     0,    22,
-      20,    17,     0,    18,     0,     0,    21,     0,    15
+      19,     8,     9,    10,    16,     0,     0,    14,     0,    20,
+      22,    17,     0,    18,     0,     0,    21,     0,    15
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -560,20 +564,20 @@ static const yytype_int8 yydefgoto[] =
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -12
+#define YYPACT_NINF -15
 static const yytype_int8 yypact[] =
 {
-      -1,    -6,     3,     5,   -12,    -1,    -1,     6,    -1,   -12,
-     -12,   -12,     2,     7,     8,    10,     0,   -12,   -12,   -12,
-     -12,   -12,     4,   -12,   -12,    -3,    13,   -12,    11,   -12,
-     -12,    16,     2,    16,    12,     0,   -12,    17,   -12
+      -7,   -11,     2,     3,   -15,    -7,    -7,     7,    -7,   -15,
+     -15,   -15,    -2,     6,     0,    10,     5,   -15,   -15,   -15,
+     -15,   -15,     8,   -15,   -15,    -3,    13,   -15,     9,   -15,
+     -15,    16,    -2,    16,    11,     5,   -15,    15,   -15
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -12,   -12,    -4,   -12,   -12,   -12,   -12,    -9,   -12,   -12,
-     -11,   -12,   -12,    -2
+     -15,   -15,    -1,   -15,   -15,   -15,   -15,    -9,   -15,   -15,
+     -14,   -15,   -15,     1
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -582,32 +586,32 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      28,    10,    11,     7,    13,     9,    29,     1,     2,     8,
-      12,    30,    14,    20,    17,    19,    26,    32,    18,    34,
-      29,    36,    38,    35,    37,     0,    33
+      28,     1,     7,     9,    10,    11,     2,    13,     8,    29,
+      30,    12,    14,    17,    18,    19,    20,    32,    26,    34,
+      38,    37,    30,    35,    36,     0,     0,     0,     0,    33
 };
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-12)))
+  (!!((Yystate) == (-15)))
 
 #define yytable_value_is_error(Yytable_value) \
   YYID (0)
 
 static const yytype_int8 yycheck[] =
 {
-       3,     5,     6,     9,     8,     0,     9,     8,     9,     6,
-       4,    14,    10,    13,     7,     5,    12,     4,    10,     3,
-       9,     9,     5,    32,    35,    -1,    28
+       3,     8,    13,     0,     5,     6,    13,     8,     6,    12,
+      13,     4,    14,     7,    14,     5,    11,     4,    10,     3,
+       5,    35,    13,    32,    13,    -1,    -1,    -1,    -1,    28
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     8,     9,    16,    17,    18,    19,     9,     6,     0,
-      17,    17,     4,    17,    10,    20,    22,     7,    10,     5,
-      13,    21,    23,    25,    26,    27,    12,    24,     3,     9,
-      14,    28,     4,    28,     3,    22,     9,    25,     5
+       0,     8,    13,    16,    17,    18,    19,    13,     6,     0,
+      17,    17,     4,    17,    14,    20,    22,     7,    14,     5,
+      11,    21,    23,    25,    26,    27,    10,    24,     3,    12,
+      13,    28,     4,    28,     3,    22,    13,    25,     5
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1524,134 +1528,136 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 68 "Grammar.ypp"
-    { (yyval.sectionval) = (yyvsp[(1) - (1)].sectionval); DPRINT("S"); }
+#line 74 "Grammar.ypp"
+    { (yyval.sectionval) = (yyvsp[(1) - (1)].sectionval); parseResult = (yyval.sectionval); DPRINT("S"); }
     break;
 
   case 3:
 /* Line 1792 of yacc.c  */
-#line 71 "Grammar.ypp"
+#line 77 "Grammar.ypp"
     { (yyval.sectionval) = new Section(); DPRINT("SECTION"); }
     break;
 
   case 4:
 /* Line 1792 of yacc.c  */
-#line 72 "Grammar.ypp"
+#line 78 "Grammar.ypp"
     { (yyval.sectionval) = (yyvsp[(2) - (2)].sectionval); if((yyval.sectionval)) (yyval.sectionval)->add((yyvsp[(1) - (2)].sectionval)); DPRINT("SECTION"); }
     break;
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 73 "Grammar.ypp"
+#line 79 "Grammar.ypp"
     { (yyval.sectionval) = (yyvsp[(2) - (2)].sectionval); if((yyval.sectionval)) (yyval.sectionval)->add((yyvsp[(1) - (2)].sceneval)); DPRINT("SCENE"); }
     break;
 
   case 6:
 /* Line 1792 of yacc.c  */
-#line 76 "Grammar.ypp"
-    { (yyval.sectionval) = (yyvsp[(3) - (4)].sectionval); if((yyval.sectionval)) (yyval.sectionval)->name((yyvsp[(1) - (4)].charstrval)); DPRINT("SECTION_DECLARATION"); }
+#line 82 "Grammar.ypp"
+    { (yyval.sectionval) = (yyvsp[(3) - (4)].sectionval); if((yyval.sectionval)) (yyval.sectionval)->name(*(yyvsp[(1) - (4)].stringval )); delete (yyvsp[(1) - (4)].stringval ); DPRINT("SECTION_DECLARATION"); }
     break;
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 80 "Grammar.ypp"
-    { (yyval.sceneval) = (yyvsp[(4) - (5)].sceneval); if((yyval.sceneval)) (yyval.sceneval)->name((yyvsp[(2) - (5)].charstrval)); DPRINT("SCENE_DECLARATION"); }
+#line 84 "Grammar.ypp"
+    { (yyval.sceneval) = (yyvsp[(4) - (5)].sceneval); if((yyval.sceneval)) (yyval.sceneval)->name(*(yyvsp[(2) - (5)].stringval )); delete (yyvsp[(2) - (5)].stringval ); DPRINT("SCENE_DECLARATION"); }
     break;
 
   case 8:
 /* Line 1792 of yacc.c  */
-#line 82 "Grammar.ypp"
+#line 86 "Grammar.ypp"
     { (yyval.sceneval) = (yyvsp[(2) - (2)].sceneval); if((yyval.sceneval)) (yyval.sceneval)->header((yyvsp[(1) - (2)].headerval)); DPRINT("SCENE"); }
     break;
 
   case 9:
 /* Line 1792 of yacc.c  */
-#line 84 "Grammar.ypp"
+#line 88 "Grammar.ypp"
     { (yyval.sceneval) = new Scene((yyvsp[(1) - (1)].choicevectorval)); DPRINT("SCENE_POSTHEADER"); }
     break;
 
   case 10:
 /* Line 1792 of yacc.c  */
-#line 85 "Grammar.ypp"
+#line 89 "Grammar.ypp"
     { (yyval.sceneval) = new Scene((yyvsp[(1) - (1)].destinationval)); DPRINT("SCENE_POSTHEADER"); }
     break;
 
   case 11:
 /* Line 1792 of yacc.c  */
-#line 87 "Grammar.ypp"
-    { (yyval.headerval) = new Header((yyvsp[(1) - (1)].charstrval)); DPRINT("HEADER"); }
+#line 91 "Grammar.ypp"
+    { (yyval.headerval) = new Header(std::string(*(yyvsp[(1) - (1)].stringval ))); delete (yyvsp[(1) - (1)].stringval ); DPRINT("HEADER"); }
     break;
 
   case 12:
 /* Line 1792 of yacc.c  */
-#line 88 "Grammar.ypp"
-    { (yyval.headerval) = new Header((yyvsp[(1) - (2)].charstrval), (yyvsp[(2) - (2)].charstrval)); DPRINT("HEADER"); }
+#line 92 "Grammar.ypp"
+    { (yyval.headerval) = new Header(std::string(*(yyvsp[(1) - (2)].stringval )), std::string(*(yyvsp[(2) - (2)].stringval )));
+                                                           delete (yyvsp[(1) - (2)].stringval ); delete (yyvsp[(2) - (2)].stringval ); DPRINT("HEADER"); }
     break;
 
   case 13:
 /* Line 1792 of yacc.c  */
-#line 90 "Grammar.ypp"
+#line 95 "Grammar.ypp"
     { (yyval.choicevectorval) = new std::vector<Choice*>(); DPRINT("CHOICE_LIST"); }
     break;
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 91 "Grammar.ypp"
+#line 96 "Grammar.ypp"
     { (yyval.choicevectorval) = (yyvsp[(1) - (2)].choicevectorval);
                                                            if((yyval.choicevectorval)) (yyval.choicevectorval)->push_back((yyvsp[(2) - (2)].choiceval));DPRINT("CHOICE_LIST"); }
     break;
 
   case 15:
 /* Line 1792 of yacc.c  */
-#line 95 "Grammar.ypp"
+#line 99 "Grammar.ypp"
     { (yyval.choiceval) = new Choice((yyvsp[(3) - (5)].headerval), (yyvsp[(4) - (5)].destinationval)); DPRINT("CHOICE"); }
     break;
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 97 "Grammar.ypp"
+#line 101 "Grammar.ypp"
     { (yyval.destinationval) = (yyvsp[(2) - (2)].destinationval); DPRINT("GOTO"); }
     break;
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 99 "Grammar.ypp"
+#line 103 "Grammar.ypp"
     { (yyval.destinationval) = (yyvsp[(2) - (2)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->backsteps((yyvsp[(1) - (2)].intval)); if((yyval.destinationval)) (yyval.destinationval)->relative(true ); DPRINT("LOCATION"); }
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 100 "Grammar.ypp"
+#line 104 "Grammar.ypp"
     { (yyval.destinationval) = (yyvsp[(3) - (3)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->backsteps((yyvsp[(1) - (3)].intval)); if((yyval.destinationval)) (yyval.destinationval)->relative(false); DPRINT("LOCATION"); }
     break;
 
   case 19:
 /* Line 1792 of yacc.c  */
-#line 102 "Grammar.ypp"
+#line 106 "Grammar.ypp"
     { (yyval.intval)=0; }
     break;
 
   case 20:
 /* Line 1792 of yacc.c  */
-#line 103 "Grammar.ypp"
+#line 107 "Grammar.ypp"
     { (yyval.intval) = (yyvsp[(1) - (2)].intval)+1; DPRINT("LOCATION_PREFIX"); }
     break;
 
   case 21:
 /* Line 1792 of yacc.c  */
-#line 106 "Grammar.ypp"
-    { (yyval.destinationval) = new Destination(*(yyvsp[(1) - (3)].destinationval), (yyvsp[(3) - (3)].charstrval)); delete (yyvsp[(1) - (3)].destinationval); DPRINT("LOCATION_BODY"); }
+#line 110 "Grammar.ypp"
+    { (yyval.destinationval) = (yyvsp[(1) - (3)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->appendLocation(*(yyvsp[(3) - (3)].stringval )); delete (yyvsp[(3) - (3)].stringval );
+                                                           DPRINT("LOCATION_BODY"); }
     break;
 
   case 22:
 /* Line 1792 of yacc.c  */
-#line 107 "Grammar.ypp"
-    { (yyval.destinationval) = new Destination((yyvsp[(1) - (1)].charstrval)); DPRINT("LOCATION_BODY"); }
+#line 112 "Grammar.ypp"
+    { (yyval.destinationval) = new Destination(*(yyvsp[(1) - (1)].stringval )); delete (yyvsp[(1) - (1)].stringval ); DPRINT("LOCATION_BODY"); }
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1655 "Grammar.tab.cpp"
+#line 1661 "Grammar.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1890,7 +1896,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 109 "Grammar.ypp"
+#line 114 "Grammar.ypp"
 
 void yyerror (char const *s)
 {

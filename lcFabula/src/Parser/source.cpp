@@ -2,12 +2,21 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "FlexLexer.h"
+#include <FlexLexer.h>
+#include <ParseNodes/section.h>
 
 using namespace std;
 extern int yyparse();
 
-std::istringstream inputStream("hi []");
+fabula::parsing::node::Section *parseResult;
+
+std::istringstream inputStream(
+	"scene Start \n"
+	"{\n"
+	"\"Header\" \"Body\"\n"
+	"choice { \"Jump\" \"Description!\\\"\" goto .End\n }"
+	"}\n"
+	"scene End { \"Yo\" \"Yooo\" goto Start2 }");
 std::ostringstream outputStream;
 
 yyFlexLexer lexer(&inputStream, &outputStream);
@@ -23,18 +32,17 @@ extern int yydebug;
 int main(int argc, char** argv)
 {
     cout<<"Running Fabula\n";
-	yydebug = 0;
+	yydebug = 1;
 	yyparse();
-
 
 	/*
 	fabula::World world;
 	world.parse
 		(
-			"scene Start "
-			"{"
-			"\"Header\" \"Body\" "
-			"choice \"Jump\" \"Description!\\\"\" goto <-->End "
+			"scene Start \n"
+			"{\n"
+			"\"Header\" \"Body\"\n"
+			"choice \"Jump\" \"Description!\\\"\" goto .End\n"	
 			"}\n"
 			"scene End { \"Yo\" \"Yooo\" goto Start2 }"
 			);

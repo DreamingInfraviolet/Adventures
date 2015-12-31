@@ -3,10 +3,13 @@
     //Custom code goes here
     #include <string>
     #include <vector>
-    #include "choice.h"
-    #include "section.h"
-    #include "scene.h"
-    using namespace fabula;
+    #include "ParseNodes/choice.h"
+    #include "ParseNodes/section.h"
+    #include "ParseNodes/scene.h"
+    #include "ParseNodes/fstring.h"
+    #include "ParseNodes/header.h"
+    #include "ParseNodes/destination.h"
+    using namespace fabula::parsing::node;
 
     void yyerror (char const *s);
 
@@ -17,12 +20,13 @@
     #define YYDEBUG 1
 
     extern int flexLineNo;
+    extern Section* parseResult;
 %}
 
 %union
 {
-    char*                charstrval;
     std::string*         stringval;
+    char*                charstrval;
     Section*             sectionval;
     String*              fstringval;
     Scene*               sceneval;
@@ -42,12 +46,12 @@
 %token <charstrval> tbracket_square_open
 %token <charstrval> tbracket_square_close
 %token <charstrval> tscene
-%token <charstrval> tidentifier
-%token <charstrval> tstring
 %token <charstrval> tignore
 %token <charstrval> tchoice
 %token <charstrval> tgoto
 %token <charstrval> tfullstop
+%token <stringval > tidentifier
+%token <stringval > tstring
 
 %type <sectionval>      S
 %type <sectionval>      SECTION
@@ -65,7 +69,9 @@
 
 %%
 
-S                   : SECTION                            { $$ = $1; DPRINT("S"); };
+//Note that all identifiers and strings must be deleted, along with other dynamically allocated resources.
+
+S                   : SECTION                            { $$ = $1; parseResult = $$; DPRINT("S"); };
 
 
 SECTION             :                                    { $$ = new Section(); DPRINT("SECTION"); }
@@ -73,26 +79,24 @@ SECTION             :                                    { $$ = new Section(); D
                      | SCENE_DECLARATION SECTION         { $$ = $2; if($$) $$->add($1); DPRINT("SCENE"); }
 
 SECTION_DECLARATION : tidentifier tbracket_square_open
-                        SECTION tbracket_square_close    { $$ = $3; if($$) $$->name($1); DPRINT("SECTION_DECLARATION"); };
+                        SECTION tbracket_square_close    { $$ = $3; if($$) $$->name(*$1); delete $1; DPRINT("SECTION_DECLARATION"); };
 
-SCENE_DECLARATION   :tscene tidentifier
-                         tbracket_curly_open SCENE
-                         tbracket_curly_close            { $$ = $4; if($$) $$->name($2); DPRINT("SCENE_DECLARATION"); };
+SCENE_DECLARATION   :tscene tidentifier tbracket_curly_open SCENE tbracket_curly_close { $$ = $4; if($$) $$->name(*$2); delete $2; DPRINT("SCENE_DECLARATION"); };
 
 SCENE               : HEADER SCENE_POSTHEADER            { $$ = $2; if($$) $$->header($1); DPRINT("SCENE"); };
 
 SCENE_POSTHEADER    : CHOICE_LIST                        { $$ = new Scene($1); DPRINT("SCENE_POSTHEADER"); }
                     | GOTO                               { $$ = new Scene($1); DPRINT("SCENE_POSTHEADER"); };
 
-HEADER              : tstring                            { $$ = new Header($1); DPRINT("HEADER"); }
-                    | tstring tstring                    { $$ = new Header($1, $2); DPRINT("HEADER"); };
+HEADER              : tstring                            { $$ = new Header(std::string(*$1)); delete $1; DPRINT("HEADER"); }
+                    | tstring tstring                    { $$ = new Header(std::string(*$1), std::string(*$2));
+                                                           delete $1; delete $2; DPRINT("HEADER"); };
 
 CHOICE_LIST         :                                    { $$ = new std::vector<Choice*>(); DPRINT("CHOICE_LIST"); }
                     | CHOICE_LIST CHOICE                 { $$ = $1;
                                                            if($$) $$->push_back($2);DPRINT("CHOICE_LIST"); };
 
-CHOICE              : tchoice tbracket_curly_open HEADER
-                         GOTO tbracket_curly_close       { $$ = new Choice($3, $4); DPRINT("CHOICE"); };
+CHOICE              : tchoice tbracket_curly_open HEADER GOTO tbracket_curly_close { $$ = new Choice($3, $4); DPRINT("CHOICE"); };
 
 GOTO                : tgoto LOCATION                     { $$ = $2; DPRINT("GOTO"); };
 
@@ -103,8 +107,9 @@ LOCATION_PREFIX      : { $$=0; }
                      | LOCATION_PREFIX tfullstop         { $$ = $1+1; DPRINT("LOCATION_PREFIX"); };
 
 
-LOCATION_BODY        : LOCATION_BODY tdiv tidentifier    { $$ = new Destination(*$1, $3); delete $1; DPRINT("LOCATION_BODY"); }
-                     | tidentifier                       { $$ = new Destination($1); DPRINT("LOCATION_BODY"); };
+LOCATION_BODY        : LOCATION_BODY tdiv tidentifier    { $$ = $1; if($$) $$->appendLocation(*$3); delete $3;
+                                                           DPRINT("LOCATION_BODY"); }
+                     | tidentifier                       { $$ = new Destination(*$1); delete $1; DPRINT("LOCATION_BODY"); };
 
 %%
 void yyerror (char const *s)

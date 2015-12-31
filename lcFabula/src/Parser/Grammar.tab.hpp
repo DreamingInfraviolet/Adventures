@@ -52,12 +52,12 @@ extern int yydebug;
      tbracket_square_open = 261,
      tbracket_square_close = 262,
      tscene = 263,
-     tidentifier = 264,
-     tstring = 265,
-     tignore = 266,
-     tchoice = 267,
-     tgoto = 268,
-     tfullstop = 269
+     tignore = 264,
+     tchoice = 265,
+     tgoto = 266,
+     tfullstop = 267,
+     tidentifier = 268,
+     tstring = 269
    };
 #endif
 
@@ -66,10 +66,10 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 23 "Grammar.ypp"
+#line 27 "Grammar.ypp"
 
-    char*                charstrval;
     std::string*         stringval;
+    char*                charstrval;
     Section*             sectionval;
     String*              fstringval;
     Scene*               sceneval;
