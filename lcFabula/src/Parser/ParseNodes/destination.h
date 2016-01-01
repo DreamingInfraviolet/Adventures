@@ -16,6 +16,8 @@ namespace fabula
     {
         namespace node
         {
+			class Scene;
+
 			class Destination : public ParseNode
 			{
 				std::vector<std::string> mLocationChain;
@@ -55,6 +57,11 @@ namespace fabula
 
 				/** Performs semantic error detection, throwing an exception if failed. */
 				virtual void checkSemantics();
+
+				/** Returns the pointer to a scene if one exists, inferred from the destination.
+				  * Assumes that parent has been bound.
+				  * Throws a SemanticException if requested ^_^ Otherwise returns null upon failure. */
+				Scene* getScene(bool throwSemanticException = false);
 			};
 		}
 	}

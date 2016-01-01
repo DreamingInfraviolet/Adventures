@@ -5,8 +5,8 @@
   * @purpose This class holds the information about a section object. A section can contain scenes, or subsections.
   */
 
-#include <vector>
 #include <string>
+#include <map>
 #include "parse_node.h"
 
 namespace fabula
@@ -19,9 +19,9 @@ namespace fabula
 
 		    class Section : public ParseNode
 		    {
-				std::string           mName;
-				std::vector<Scene*>   mScenes;
-				std::vector<Section*> mSubsections;
+				std::string                     mName;
+				std::map<std::string, Scene*>   mScenes;
+				std::map<std::string, Section*> mSubsections;
 
 			public:
 
@@ -51,6 +51,18 @@ namespace fabula
 
 				/** Performs semantic error detection, throwing an exception if failed. */
 				virtual void checkSemantics();
+
+				/** returns whether the section has a subsection with a given name. */
+				bool hasSubsection (const std::string& name) const;
+
+				/** returns whether the scene has a subsection with a given name. */
+				bool hasScene (const std::string& name) const;
+
+				/** Returns a subsection given a name, returning null if none exists. */
+				Section* getSubsection(const std::string& name);
+
+				/** Returns a scene given a name, returning null if none exists. */
+				Scene* getScene(const std::string& name);
 		    };
 		}
 	}

@@ -21,12 +21,14 @@ namespace fabula
 
 			void Header::bindChildren()
 			{
-				mTitle.bindParent(this);
-				mDescription.bindParent(this);
+				mTitle.initiateParentBinding(this);
+				mDescription.initiateParentBinding(this);
 			}
 
 			void Header::checkSemantics()
 			{
+				mTitle.checkSemantics();
+				mDescription.checkSemantics();
 			}
         }
     }

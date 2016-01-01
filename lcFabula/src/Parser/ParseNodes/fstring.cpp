@@ -21,6 +21,7 @@ namespace fabula
 
 			void String::bindChildren()
 			{
+
 			}
 
 			void String::checkSemantics()

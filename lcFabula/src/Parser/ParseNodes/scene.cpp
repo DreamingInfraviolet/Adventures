@@ -57,21 +57,33 @@ namespace fabula
 			void Scene::bindChildren()
 			{
 				if (mHeader)
-					mHeader->bindParent(this);
+					mHeader->initiateParentBinding(this);
 
 				if (mChoices)
 					for (Choice* choice : *mChoices)
 					{
 						assert(choice);
-						choice->bindParent(this);
+						choice->initiateParentBinding(this);
 					}
 
 				if (mDestination)
-					mDestination->bindParent(this);
+					mDestination->initiateParentBinding(this);
 			}
 
 			void Scene::checkSemantics()
 			{
+				if (mHeader)
+					mHeader->checkSemantics();
+
+				if (mChoices)
+					for (Choice* choice : *mChoices)
+					{
+						assert(choice);
+						choice->checkSemantics();
+					}
+
+				if (mDestination)
+					mDestination->checkSemantics();
 			}
         }
     }

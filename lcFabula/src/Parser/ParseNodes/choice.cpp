@@ -25,13 +25,17 @@ namespace fabula
 			void Choice::bindChildren()
 			{
 				if(mHeader)
-					mHeader->bindParent(this);
+					mHeader->initiateParentBinding(this);
 				if(mDestination)
-					mDestination->bindParent(this);
+					mDestination->initiateParentBinding(this);
 			}
 
 			void Choice::checkSemantics()
 			{
+				if (mHeader)
+					mHeader->checkSemantics();
+				if (mDestination)
+					mDestination->checkSemantics();
 			}
         }
     }

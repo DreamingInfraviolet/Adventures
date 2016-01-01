@@ -14,9 +14,10 @@ std::istringstream inputStream(
 	"scene Start \n"
 	"{\n"
 	"\"Header\" \"Body\"\n"
-	"choice { \"Jump\" \"Description!\\\"\" goto .End\n }"
+	"choice { \"Jump\" \"Description!\\\"\" goto /End\n }"
 	"}\n"
-	"scene End { \"Yo\" \"Yooo\" goto Start2 }");	
+	"scene End { \"Yo\" \"Yooo\" goto Start2 } \n"
+	" scene Start2 {\"XD\" }");	
 std::ostringstream outputStream;
 
 yyFlexLexer lexer(&inputStream, &outputStream);
@@ -34,6 +35,9 @@ int main(int argc, char** argv)
     cout<<"Running Fabula\n";
 	yydebug = 0;
 	yyparse();
+
+	parseResult->initiateParentBinding(nullptr);
+	parseResult->checkSemantics();
 
 
 	/*

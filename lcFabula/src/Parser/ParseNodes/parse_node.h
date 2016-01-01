@@ -1,4 +1,4 @@
-#pragma once
+	#pragma once
 
 /**
   * @author Anima Seteine
@@ -22,17 +22,18 @@ namespace fabula
                 virtual NodeType nodeType() = 0;
 
                 /** Sets the parent of the object and prompts it to set itself as a parent to its children. */
-				void bindParent(ParseNode* parent)
+				void initiateParentBinding(ParseNode* parent)
 				{
 					mParent = parent;
 					bindChildren();
 				}
 
-				/** Calls bindParent on all its children. */
-				virtual void bindChildren() = 0;
-
                 /** Performs semantic error detection, throwing an exception if failed. */
                 virtual void checkSemantics() = 0;
+
+			protected:
+				/** Calls initiateParentBinding on all its children. */
+				virtual void bindChildren() = 0;
 
 			private:
                 // The parent, if any.

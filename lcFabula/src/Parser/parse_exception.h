@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 namespace fabula
 {
 	namespace parsing
@@ -9,7 +10,6 @@ namespace fabula
 		public:
 			std::string message;
 			int line;
-			Type type;
 
 			ParseException() {}
 			ParseException(const std::string& message_)
@@ -19,17 +19,17 @@ namespace fabula
 		class SyntacticException : public ParseException
 		{
 		public:
-			SyntacticException() : ParseException(), line(0) {}
-			SyntacticException(const std::string& message_, int line_)
-				: ParseException(message_), line(line_) {}
+			SyntacticException() : ParseException() {}
+			SyntacticException(const std::string& message_)
+				: ParseException(message_) {}
 		};
 
-		class SyntacticException : public ParseException
+		class SemanticException : public ParseException
 		{
 		public:
-			SyntacticException() : ParseException(), line(0) {}
-			SyntacticException(const std::string& message_, int line_)
-				: ParseException(message_), line(line_) {}
+			SemanticException() : ParseException() {}
+			SemanticException(const std::string& message_)
+				: ParseException(message_)  {}
 		};
 	}
 }
