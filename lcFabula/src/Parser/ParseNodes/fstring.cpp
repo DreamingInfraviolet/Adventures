@@ -1,4 +1,5 @@
 #include "fstring.h"
+#include "writer.h"
 
 namespace fabula
 {
@@ -26,6 +27,13 @@ namespace fabula
 
 			void String::checkSemantics()
 			{
+			}
+
+			void String::write(Writer* writer)
+			{
+				writer->push("string");
+				writer->writeBytes(str());
+				writer->pop();
 			}
         }
     }

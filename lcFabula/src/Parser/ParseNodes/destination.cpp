@@ -4,6 +4,8 @@
 #include "section.h"
 #include "parse_exception.h"
 #include "choice.h"
+#include "writer.h"
+#include "util.h"
 
 extern fabula::parsing::node::Section* parseResult;
 
@@ -134,6 +136,20 @@ namespace fabula
 			void Destination::relative(bool r)
 			{
 				mRelative = r;
+			}
+
+			void Destination::write(Writer* writer)
+			{
+				assert(writer);
+				writer->push("destination", { {"backsteps",	toString(mBacksteps)},
+				                              {"relative", mRelative ? "1":"0"} });
+				for (auto it = mLocationChain.begin(); it != mLocationChain.end() - 1; ++it)
+				{
+					writer->push("link");
+					writer->writeBytes(*it);
+					writer->pop();
+				}
+				writer->pop();
 			}
 		}
 	}

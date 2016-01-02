@@ -4,6 +4,7 @@
 #include <sstream>
 #include <FlexLexer.h>
 #include <ParseNodes/section.h>
+#include "xml_writer.h"
 
 using namespace std;
 extern int yyparse();
@@ -34,11 +35,21 @@ int main(int argc, char** argv)
 {
     cout<<"Running Fabula\n";
 	yydebug = 0;
+
+	std::cout<<"---------------------------\ninput\n---------------------------\n";
+	std::cout << inputStream.str();
+	std::cout << "\n---------------------------\nparsing\n---------------------------\n";
+
 	yyparse();
 
 	parseResult->initiateParentBinding(nullptr);
 	parseResult->checkSemantics();
 
+	std::ostringstream str;
+	fabula::parsing::XmlWriter writer(str);
+	parseResult->write(&writer);
+	std::cout << "\n---------------------------\nxml\n---------------------------\n";
+	std::cout << str.str();
 
 	/*
 	fabula::World world;

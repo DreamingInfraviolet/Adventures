@@ -3,6 +3,7 @@
 #include <cassert>
 #include "parse_exception.h"
 #include <set>
+#include "writer.h"
 
 namespace fabula
 {
@@ -76,9 +77,15 @@ namespace fabula
 				//So just call the method on the children instead ^.^
 
 				for (auto it = mScenes.begin(); it != mScenes.end(); ++it)
+				{
+					assert(it->second);
 					it->second->checkSemantics();
+				}
 				for (auto it = mSubsections.begin(); it != mSubsections.end(); ++it)
+				{
+					assert(it->second);
 					it->second->checkSemantics();
+				}
 			}
 
 			bool Section::hasSubsection (const std::string& name) const
@@ -107,6 +114,26 @@ namespace fabula
 					return nullptr;
 				else
 					return it->second;
+			}
+
+
+			void Section::write(fabula::parsing::Writer* writer)
+			{
+				assert(writer);
+				writer->push("section", { {"name", mName} });
+
+				for (auto it = mScenes.begin(); it != mScenes.end(); ++it)
+				{
+					assert(it->second);
+					it->second->write(writer);
+				}
+				for (auto it = mSubsections.begin(); it != mSubsections.end(); ++it)
+				{
+					assert(it->second);
+					it->second->write(writer);
+				}
+
+				writer->pop();
 			}
         }
     }

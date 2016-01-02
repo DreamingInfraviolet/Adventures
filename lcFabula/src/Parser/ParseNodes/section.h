@@ -11,9 +11,11 @@
 
 namespace fabula
 {
-    namespace parsing
+	namespace parsing
     {
-        namespace node
+		class Writer;
+
+		namespace node
         {
 			class Scene;
 
@@ -63,6 +65,9 @@ namespace fabula
 
 				/** Returns a scene given a name, returning null if none exists. */
 				Scene* getScene(const std::string& name);
+
+				/** Writes the node to a writer class. */
+				virtual void write(fabula::parsing::Writer* writer);
 		    };
 		}
 	}

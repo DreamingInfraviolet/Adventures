@@ -14,6 +14,8 @@ namespace fabula
 {
     namespace parsing
     {
+		class Writer;
+
         namespace node
         {
 			class Scene;
@@ -62,6 +64,9 @@ namespace fabula
 				  * Assumes that parent has been bound.
 				  * Throws a SemanticException if requested ^_^ Otherwise returns null upon failure. */
 				Scene* getScene(bool throwSemanticException = false);
+
+				/** Writes the node to a writer class. */
+				virtual void write(Writer* writer);
 			};
 		}
 	}

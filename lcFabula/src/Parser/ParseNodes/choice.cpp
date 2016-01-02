@@ -1,6 +1,8 @@
 #include "choice.h"
 #include "header.h"
 #include "destination.h"
+#include "writer.h"
+#include <cassert>
 
 namespace fabula
 {
@@ -36,6 +38,17 @@ namespace fabula
 					mHeader->checkSemantics();
 				if (mDestination)
 					mDestination->checkSemantics();
+			}
+
+			void Choice::write(fabula::parsing::Writer* writer)
+			{
+				assert(writer);
+				writer->push("choice");
+				if (mHeader)
+					mHeader->write(writer);
+				if (mDestination)
+					mDestination->write(writer);
+				writer->pop();
 			}
         }
     }

@@ -1,4 +1,5 @@
 #include "header.h"
+#include "writer.h"
 
 namespace fabula
 {
@@ -29,6 +30,14 @@ namespace fabula
 			{
 				mTitle.checkSemantics();
 				mDescription.checkSemantics();
+			}
+
+			void Header::write(Writer* writer)
+			{
+				writer->push("header");
+				mTitle.write(writer);
+				mDescription.write(writer);
+				writer->pop();
 			}
         }
     }

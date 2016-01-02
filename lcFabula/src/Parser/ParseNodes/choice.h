@@ -11,6 +11,8 @@ namespace fabula
 {
     namespace parsing
     {
+		class Writer;
+
         namespace node
         {
             class Header;
@@ -36,6 +38,9 @@ namespace fabula
 
 				/** Performs semantic error detection, throwing an exception if failed. */
 				virtual void checkSemantics();
+
+				/** Writes the node to a writer class. */
+				virtual void write(fabula::parsing::Writer* writer);
             };
         }
     }

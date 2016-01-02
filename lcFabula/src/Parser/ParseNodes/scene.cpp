@@ -3,6 +3,7 @@
 #include "choice.h"
 #include "destination.h"
 #include <cassert>
+#include "writer.h"
 
 namespace fabula
 {
@@ -84,6 +85,32 @@ namespace fabula
 
 				if (mDestination)
 					mDestination->checkSemantics();
+			}
+
+			void Scene::write(Writer* writer)
+			{
+				assert(writer);
+
+				writer->push("scene", { {"name", mName} });
+
+				if (mHeader)
+					mHeader->write(writer);
+				else //write empty header
+					Header().write(writer);
+
+				writer->push("choices");
+				if (mChoices)
+					for (Choice* choice : *mChoices)
+					{
+						assert(choice);
+						choice->write(writer);
+					}
+				writer->pop();
+
+				if (mDestination)
+					mDestination->write(writer);
+
+				writer->pop();
 			}
         }
     }

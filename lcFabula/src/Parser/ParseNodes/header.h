@@ -37,6 +37,9 @@ namespace fabula
 
 				/** Performs semantic error detection, throwing an exception if failed. */
 				virtual void checkSemantics();
+
+				/** Writes the node to a writer class. */
+				virtual void write(Writer* writer);
             };
         }
     }
