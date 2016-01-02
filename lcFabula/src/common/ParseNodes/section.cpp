@@ -117,10 +117,9 @@ namespace fabula
 			}
 
 
-			void Section::write(fabula::parsing::Writer* writer)
+			void Section::write(fabula::parsing::Writer& writer)
 			{
-				assert(writer);
-				writer->push("section", { {"name", mName} });
+				writer.push("section", { {"name", mName} });
 
 				for (auto it = mScenes.begin(); it != mScenes.end(); ++it)
 				{
@@ -133,7 +132,7 @@ namespace fabula
 					it->second->write(writer);
 				}
 
-				writer->pop();
+				writer.pop();
 			}
         }
     }

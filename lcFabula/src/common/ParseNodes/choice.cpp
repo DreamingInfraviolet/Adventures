@@ -40,15 +40,14 @@ namespace fabula
 					mDestination->checkSemantics();
 			}
 
-			void Choice::write(fabula::parsing::Writer* writer)
+			void Choice::write(fabula::parsing::Writer& writer)
 			{
-				assert(writer);
-				writer->push("choice");
+				writer.push("choice");
 				if (mHeader)
 					mHeader->write(writer);
 				if (mDestination)
 					mDestination->write(writer);
-				writer->pop();
+				writer.pop();
 			}
         }
     }

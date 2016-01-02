@@ -39,7 +39,7 @@ namespace fabula
 				virtual void checkSemantics();
 
 				/** Writes the node to a writer class. */
-				virtual void write(Writer* writer);
+				virtual void write(Writer& writer);
             };
         }
     }

@@ -33,7 +33,7 @@ namespace fabula
                 /** Performs semantic error detection, throwing an exception if failed. */
                 virtual void checkSemantics() = 0;
 
-				virtual void write(Writer* writer) = 0;
+				virtual void write(Writer& writer) = 0;
 
 			protected:
 				/** Calls initiateParentBinding on all its children. */

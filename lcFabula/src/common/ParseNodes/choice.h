@@ -40,7 +40,7 @@ namespace fabula
 				virtual void checkSemantics();
 
 				/** Writes the node to a writer class. */
-				virtual void write(fabula::parsing::Writer* writer);
+				virtual void write(fabula::parsing::Writer& writer);
             };
         }
     }

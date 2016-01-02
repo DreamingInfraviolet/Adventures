@@ -675,53 +675,53 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 30 "Grammar.flex"
-{ yylval.charstrval = "/"; return tdiv; }
+{ fyylval.charstrval = "/"; return tdiv; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 31 "Grammar.flex"
-{ yylval.charstrval = "{";  return tbracket_curly_open;  }
+{ fyylval.charstrval = "{";  return tbracket_curly_open;  }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 32 "Grammar.flex"
-{ yylval.charstrval = "}";  return tbracket_curly_close; }
+{ fyylval.charstrval = "}";  return tbracket_curly_close; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 33 "Grammar.flex"
-{ yylval.charstrval = "[";  return tbracket_square_open; }
+{ fyylval.charstrval = "[";  return tbracket_square_open; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 34 "Grammar.flex"
-{ yylval.charstrval = "]";  return tbracket_square_close; }
+{ fyylval.charstrval = "]";  return tbracket_square_close; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 35 "Grammar.flex"
-{ yylval.charstrval = "scene";  return tscene; }
+{ fyylval.charstrval = "scene";  return tscene; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 36 "Grammar.flex"
-{ yylval.charstrval = "choice";  return tchoice; }
+{ fyylval.charstrval = "choice";  return tchoice; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 37 "Grammar.flex"
-{ yylval.charstrval = "goto";  return tgoto; }
+{ fyylval.charstrval = "goto";  return tgoto; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 38 "Grammar.flex"
-{ yylval.stringval = new std::string(yytext);  return tidentifier; }
+{ fyylval.stringval = new std::string(yytext);  return tidentifier; }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
 #line 39 "Grammar.flex"
-{ yylval.stringval = new std::string(yytext);  return tstring; }
+{ fyylval.stringval = new std::string(yytext);  return tstring; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 #line 40 "Grammar.flex"
@@ -752,7 +752,7 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 45 "Grammar.flex"
-{ yylval.charstrval = ".";  return tfullstop; }
+{ fyylval.charstrval = ".";  return tfullstop; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP

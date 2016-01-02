@@ -66,7 +66,7 @@ namespace fabula
 				Scene* getScene(bool throwSemanticException = false);
 
 				/** Writes the node to a writer class. */
-				virtual void write(Writer* writer);
+				virtual void write(Writer& writer);
 			};
 		}
 	}

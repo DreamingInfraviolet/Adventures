@@ -30,22 +30,30 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_GRAMMAR_TAB_HPP_INCLUDED
-# define YY_YY_GRAMMAR_TAB_HPP_INCLUDED
+#ifndef YY_FYY_GRAMMAR_TAB_HPP_INCLUDED
+# define YY_FYY_GRAMMAR_TAB_HPP_INCLUDED
 /* Enabling traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
-#if YYDEBUG
-extern int yydebug;
+#ifndef FYYDEBUG
+# if defined YYDEBUG
+#  if YYDEBUG
+#   define FYYDEBUG 1
+#  else
+#   define FYYDEBUG 0
+#  endif
+# else /* ! defined YYDEBUG */
+#  define FYYDEBUG 0
+# endif /* ! defined YYDEBUG */
+#endif  /* ! defined FYYDEBUG */
+#if FYYDEBUG
+extern int fyydebug;
 #endif
 
 /* Tokens.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
+#ifndef FYYTOKENTYPE
+# define FYYTOKENTYPE
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
-   enum yytokentype {
+   enum fyytokentype {
      tdiv = 258,
      tbracket_curly_open = 259,
      tbracket_curly_close = 260,
@@ -62,11 +70,11 @@ extern int yydebug;
 #endif
 
 
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
+#if ! defined FYYSTYPE && ! defined FYYSTYPE_IS_DECLARED
+typedef union FYYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 27 "Grammar.ypp"
+#line 33 "Grammar.ypp"
 
     std::string*         stringval;
     char*                charstrval;
@@ -81,40 +89,40 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 85 "Grammar.tab.hpp"
-} YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
-# define YYSTYPE_IS_DECLARED 1
+#line 93 "Grammar.tab.hpp"
+} FYYSTYPE;
+# define FYYSTYPE_IS_TRIVIAL 1
+# define fyystype FYYSTYPE /* obsolescent; will be withdrawn */
+# define FYYSTYPE_IS_DECLARED 1
 #endif
 
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE
+#if ! defined FYYLTYPE && ! defined FYYLTYPE_IS_DECLARED
+typedef struct FYYLTYPE
 {
   int first_line;
   int first_column;
   int last_line;
   int last_column;
-} YYLTYPE;
-# define yyltype YYLTYPE /* obsolescent; will be withdrawn */
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
+} FYYLTYPE;
+# define fyyltype FYYLTYPE /* obsolescent; will be withdrawn */
+# define FYYLTYPE_IS_DECLARED 1
+# define FYYLTYPE_IS_TRIVIAL 1
 #endif
 
-extern YYSTYPE yylval;
-extern YYLTYPE yylloc;
+extern FYYSTYPE fyylval;
+extern FYYLTYPE fyylloc;
 #ifdef YYPARSE_PARAM
 #if defined __STDC__ || defined __cplusplus
-int yyparse (void *YYPARSE_PARAM);
+int fyyparse (void *YYPARSE_PARAM);
 #else
-int yyparse ();
+int fyyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int yyparse (void);
+int fyyparse (void);
 #else
-int yyparse ();
+int fyyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
 
-#endif /* !YY_YY_GRAMMAR_TAB_HPP_INCLUDED  */
+#endif /* !YY_FYY_GRAMMAR_TAB_HPP_INCLUDED  */

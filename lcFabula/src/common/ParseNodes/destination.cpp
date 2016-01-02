@@ -7,8 +7,6 @@
 #include "writer.h"
 #include "util.h"
 
-extern fabula::parsing::node::Section* parseResult;
-
 namespace fabula
 {
     namespace parsing
@@ -67,27 +65,29 @@ namespace fabula
 				//Get the start node
 				Section* currentNode = nullptr;
 
+				assert(parent());
+
+				//Get parent scene. We may be in choice, or not!
+				Scene* parentScene;
+
+				if (parent()->nodeType() == ParseNode::NodeType::Choice)
+				{
+					Choice* parentChoice = dynamic_cast<Choice*>(parent());
+					assert(parentChoice && parentChoice->parent());
+					parentScene = dynamic_cast<Scene*>(parentChoice->parent());
+				}
+				else if (parent()->nodeType() == ParseNode::NodeType::Scene)
+					parentScene = dynamic_cast<Scene*>(parent());
+				else
+					assert(false);
+
+				assert(parentScene && parentScene->parent());
+				Section* parentSection = dynamic_cast<Section*>(parentScene->parent());
+				assert(parentSection);
+
 				if (mRelative)
 				{
-					assert(parent());
-
-					//Get parent scene. We may be in choice, or not!
-					Scene* parentScene;
-
-					if (parent()->nodeType() == ParseNode::NodeType::Choice)
-					{
-						Choice* parentChoice = dynamic_cast<Choice*>(parent());
-						assert(parentChoice && parentChoice->parent());
-						parentScene = dynamic_cast<Scene*>(parentChoice->parent());
-					}
-					else if (parent()->nodeType() == ParseNode::NodeType::Scene)
-						parentScene = dynamic_cast<Scene*>(parent());
-					else
-						assert(false);
-					
-					assert(parentScene && parentScene->parent());
-					Section* parentSection = dynamic_cast<Section*>(parentScene->parent());
-					assert(parentSection);
+					//Go number of backsteps
 					currentNode = parentSection;
 
 					for (int i = 0; i < mBacksteps; ++i)
@@ -103,9 +103,16 @@ namespace fabula
 				}
 				else
 				{
-					assert(parseResult);
-					assert(mBacksteps == 0);
-					currentNode = parseResult;
+					//Go to the root
+					currentNode = parentSection;
+					ParseNode* next = parentSection->parent();
+
+					while (next != nullptr)
+					{
+						currentNode = dynamic_cast<Section*>(next);
+						assert(currentNode);
+						next = next->parent();
+					}
 				}
 
 				//Now that we have the start, we need to traverse the location chain.
@@ -138,18 +145,17 @@ namespace fabula
 				mRelative = r;
 			}
 
-			void Destination::write(Writer* writer)
+			void Destination::write(Writer& writer)
 			{
-				assert(writer);
-				writer->push("destination", { {"backsteps",	toString(mBacksteps)},
+				writer.push("destination", { {"backsteps",	toString(mBacksteps)},
 				                              {"relative", mRelative ? "1":"0"} });
 				for (auto it = mLocationChain.begin(); it != mLocationChain.end() - 1; ++it)
 				{
-					writer->push("link");
-					writer->writeBytes(*it);
-					writer->pop();
+					writer.push("link");
+					writer.writeBytes(*it);
+					writer.pop();
 				}
-				writer->pop();
+				writer.pop();
 			}
 		}
 	}

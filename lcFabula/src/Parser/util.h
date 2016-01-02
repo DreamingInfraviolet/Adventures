@@ -1,10 +1,15 @@
 #pragma once
 
+/**
+* @author Anima Seteine
+* @purpose Provides misc utility functions.
+*/
+
 #include<sstream>
 #include<string>
 
 template<class T>
-std::string toString(const T& t)
+static std::string toString(const T& t)
 {
     std::ostringstream str;
     str << t;

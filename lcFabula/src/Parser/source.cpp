@@ -2,14 +2,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <FlexLexer.h>
-#include <ParseNodes/section.h>
+#include "parser.h"
 #include "xml_writer.h"
 
 using namespace std;
-extern int yyparse();
 
-fabula::parsing::node::Section *parseResult;
 
 std::istringstream inputStream(
 	"scene Start \n"
@@ -19,37 +16,28 @@ std::istringstream inputStream(
 	"}\n"
 	"scene End { \"Yo\" \"Yooo\" goto Start2 } \n"
 	" scene Start2 {\"XD\" }");	
-std::ostringstream outputStream;
-
-yyFlexLexer lexer(&inputStream, &outputStream);
 
 
-int yylex()
-{
-	return lexer.yylex();
-}
-
-extern int yydebug;
 
 int main(int argc, char** argv)
 {
     cout<<"Running Fabula\n";
-	yydebug = 0;
 
 	std::cout<<"---------------------------\ninput\n---------------------------\n";
 	std::cout << inputStream.str();
 	std::cout << "\n---------------------------\nparsing\n---------------------------\n";
 
-	yyparse();
+	fabula::parsing::Parser* parser = fabula::parsing::Parser::create(inputStream, "");
 
-	parseResult->initiateParentBinding(nullptr);
-	parseResult->checkSemantics();
+	parser->parse();
 
 	std::ostringstream str;
 	fabula::parsing::XmlWriter writer(str);
-	parseResult->write(&writer);
+	parser->write(writer, str);
 	std::cout << "\n---------------------------\nxml\n---------------------------\n";
 	std::cout << str.str();
+
+	fabula::parsing::Parser::destroy(parser);
 
 	/*
 	fabula::World world;

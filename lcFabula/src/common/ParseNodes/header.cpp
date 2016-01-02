@@ -32,12 +32,12 @@ namespace fabula
 				mDescription.checkSemantics();
 			}
 
-			void Header::write(Writer* writer)
+			void Header::write(Writer& writer)
 			{
-				writer->push("header");
+				writer.push("header");
 				mTitle.write(writer);
 				mDescription.write(writer);
-				writer->pop();
+				writer.pop();
 			}
         }
     }

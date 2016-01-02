@@ -27,21 +27,21 @@ WHITESPACE [ \t\n\r]
  
         // Warning: Use double quotes for literals!
 
-"/"       { yylval.charstrval = "/"; return tdiv; }
-"{"       { yylval.charstrval = "{";  return tbracket_curly_open;  }
-"}"       { yylval.charstrval = "}";  return tbracket_curly_close; }
-"["       { yylval.charstrval = "[";  return tbracket_square_open; }
-"]"       { yylval.charstrval = "]";  return tbracket_square_close; }
-"scene"       { yylval.charstrval = "scene";  return tscene; }
-"choice"        { yylval.charstrval = "choice";  return tchoice; }
-"goto"        { yylval.charstrval = "goto";  return tgoto; }
-[A-Za-z_]+([a-za-z0-9_])*       { yylval.stringval = new std::string(yytext);  return tidentifier; }
-(\"([^\"\\]|(\\[a-za-z\"]))*\")|(\'([^\'\\]|(\\[a-za-z\']))*\')  { yylval.stringval = new std::string(yytext);  return tstring; }
+"/"       { fyylval.charstrval = "/"; return tdiv; }
+"{"       { fyylval.charstrval = "{";  return tbracket_curly_open;  }
+"}"       { fyylval.charstrval = "}";  return tbracket_curly_close; }
+"["       { fyylval.charstrval = "[";  return tbracket_square_open; }
+"]"       { fyylval.charstrval = "]";  return tbracket_square_close; }
+"scene"       { fyylval.charstrval = "scene";  return tscene; }
+"choice"        { fyylval.charstrval = "choice";  return tchoice; }
+"goto"        { fyylval.charstrval = "goto";  return tgoto; }
+[A-Za-z_]+([a-za-z0-9_])*       { fyylval.stringval = new std::string(yytext);  return tidentifier; }
+(\"([^\"\\]|(\\[a-za-z\"]))*\")|(\'([^\'\\]|(\\[a-za-z\']))*\')  { fyylval.stringval = new std::string(yytext);  return tstring; }
 <<EOF>>       {  return 0; }
 "\r\n"      { ++flexLineNo; }
 "\r"      { ++flexLineNo; }
 "\n"      { ++flexLineNo; }
 [ \t]          /* Ignore */
-"."     { yylval.charstrval = ".";  return tfullstop; }
+"."     { fyylval.charstrval = ".";  return tfullstop; }
 .       { printf("Lexing error on line %d: \"%s\"\n", yylineno, yytext); }
 %%

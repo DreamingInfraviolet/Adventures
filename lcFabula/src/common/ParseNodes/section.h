@@ -67,7 +67,7 @@ namespace fabula
 				Scene* getScene(const std::string& name);
 
 				/** Writes the node to a writer class. */
-				virtual void write(fabula::parsing::Writer* writer);
+				virtual void write(fabula::parsing::Writer& writer);
 		    };
 		}
 	}
