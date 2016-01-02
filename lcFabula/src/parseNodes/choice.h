@@ -20,10 +20,10 @@ namespace fabula
 
             class Choice : public ParseNode
             {
+        	public:
                 Header*      mHeader      = nullptr;
                 Destination* mDestination = nullptr;
 
-        	public:
         		/** Initialises a choice, taking ownership of the arguments. */
         		Choice(Header* header, Destination* destination);
 

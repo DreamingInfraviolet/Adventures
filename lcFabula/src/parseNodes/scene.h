@@ -23,12 +23,12 @@ namespace fabula
 
 			class Scene : public ParseNode
 			{
+			public:
 			    std::string           mName;
 			    Header*               mHeader      = nullptr;
 			    std::vector<Choice*>* mChoices     = nullptr;
 			    Destination*          mDestination = nullptr;
 
-			public:
 
 				/** Initialises a fully empty scene. */
 			    Scene();

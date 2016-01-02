@@ -4,8 +4,8 @@ namespace fabula
 {
 	namespace parsing
 	{
-		XmlWriter::XmlWriter(std::ostream& stream)
-			: Writer(stream) {}
+		XmlWriter::XmlWriter(std::ostream& stream, bool surroundWithQuotes)
+			: Writer(stream), mSurroundWithQuotes(surroundWithQuotes) {}
 
 		void XmlWriter::indent(int level)
 		{
@@ -16,13 +16,26 @@ namespace fabula
 		void XmlWriter::push(const std::string& name,
 			const std::initializer_list<const std::pair<const std::string, const std::string>>& attributes)
 		{
-			indent(indentationLevel++);
 			stack.push_back(name);
+			++indentationLevel;
+			writeOpenTagText(name, attributes, false);
+		}
 
+		void XmlWriter::singleTag(const std::string& name,
+				const std::initializer_list<const std::pair<const std::string, const std::string>>& attributes)
+		{
+			writeOpenTagText(name, attributes, true);
+		}
+
+		void XmlWriter::writeOpenTagText(const std::string& name,
+	              const std::initializer_list<const std::pair<const std::string, const std::string>>& attributes,
+			      bool single)
+		{
+			indent(indentationLevel);
 			stream << "<" << name;
 			for (auto& attr : attributes)
 				stream << " " << attr.first << "=\"" << attr.second << "\"";
-			stream << ">\n";
+			stream << (single ? "/>\n" : ">\n");
 		}
 
 		void XmlWriter::pop()
@@ -36,7 +49,10 @@ namespace fabula
 		void XmlWriter::writeBytes(const std::string& bytes)
 		{
 			indent(indentationLevel);
-			stream << "\"" << bytes << "\"" << "\n";
+			if(mSurroundWithQuotes)
+					stream << "\"" << bytes << "\"" << "\n";
+			else
+				stream << bytes << "\n";
 		}
 	}
 }

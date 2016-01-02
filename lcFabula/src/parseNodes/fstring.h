@@ -19,9 +19,9 @@ namespace fabula
         {
             class String : public ParseNode
             {
+            public:
                 std::string _str;
 
-            public:
                 /** Constructs the empty string. */
         		String();
 

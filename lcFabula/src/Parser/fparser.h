@@ -55,6 +55,9 @@ namespace fabula
 			/** Sets the parse result. Should only be used by the generated parser. */
 			void setParseResult(fabula::parsing::node::Section* result);
 
+			/** Returns the parse result. */
+			node::Section* getParseResult();
+
 			/** Writes the parse tree to a stream. */
 			void write(Writer& writer);
         };

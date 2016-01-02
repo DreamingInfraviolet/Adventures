@@ -21,11 +21,11 @@ namespace fabula
 
 		    class Section : public ParseNode
 		    {
+			public:
 				std::string                     mName;
 				std::map<std::string, Scene*>   mScenes;
 				std::map<std::string, Section*> mSubsections;
 
-			public:
 
 				/** Initialises an empty section with no children. */
 				Section();

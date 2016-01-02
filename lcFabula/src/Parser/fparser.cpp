@@ -97,6 +97,11 @@ namespace fabula
 			mParseTree = result;
 		}
 
+		node::Section* Parser::getParseResult()
+		{
+			return mParseTree;
+		}
+
 		void Parser::write(Writer& writer)
 		{
 			if (mParseTree)

@@ -22,11 +22,11 @@ namespace fabula
 
 			class Destination : public ParseNode
 			{
+			public:
 				std::vector<std::string> mLocationChain;
 				int                 mBacksteps      = 0;
 				bool                mRelative       = true;
 
-			public:
 				/** Initialises an empty destination . */
 				Destination();
 

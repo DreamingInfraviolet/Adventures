@@ -17,8 +17,8 @@ namespace fabula
         {
             class Header : public ParseNode
             {
-                String mTitle, mDescription;
             public:
+                String mTitle, mDescription;
 
                 /** Initialises an empty header. */
                 Header();

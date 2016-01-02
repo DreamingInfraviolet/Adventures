@@ -513,8 +513,8 @@ static const yytype_int8 yyrhs[] =
       17,    -1,    13,     6,    17,     7,    -1,     8,    13,     4,
       20,     5,    -1,    22,    21,    -1,    23,    -1,    25,    -1,
       14,    -1,    14,    14,    -1,    -1,    23,    24,    -1,    10,
-       4,    22,    25,     5,    -1,    11,    26,    -1,    27,    28,
-      -1,     3,    28,    -1,    -1,    27,    12,    -1,    28,     3,
+       4,    22,    25,     5,    -1,    11,    26,    -1,     3,    28,
+      -1,    27,    28,    -1,    -1,    27,    12,    -1,    28,     3,
       13,    -1,    13,    -1
 };
 
@@ -522,8 +522,8 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    81,    81,    84,    85,    86,    88,    91,    93,    95,
-      96,    98,    99,   102,   103,   106,   108,   110,   111,   113,
-     114,   117,   119
+      96,    98,    99,   102,   103,   106,   108,   110,   111,   114,
+     115,   118,   120
 };
 #endif
 
@@ -576,7 +576,7 @@ static const yytype_uint8 yydefact[] =
        3,     0,     0,     0,     2,     3,     3,     0,     3,     1,
        4,     5,     0,     0,    11,     0,    13,     6,    12,     7,
       19,     8,     9,    10,     0,    16,     0,     0,    14,    22,
-      18,    20,    17,     0,     0,     0,    21,     0,    15
+      17,    20,    18,     0,     0,     0,    21,     0,    15
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -1645,43 +1645,44 @@ yyreduce:
   case 17:
 /* Line 1792 of yacc.c  */
 #line 110 "Grammar.ypp"
-    { (yyval.destinationval) = (yyvsp[(2) - (2)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->backsteps((yyvsp[(1) - (2)].intval)); if((yyval.destinationval)) (yyval.destinationval)->relative(true ); DPRINT("LOCATION"); }
+    { (yyval.destinationval) = (yyvsp[(2) - (2)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->relative(false); DPRINT("LOCATION"); }
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
 #line 111 "Grammar.ypp"
-    { (yyval.destinationval) = (yyvsp[(2) - (2)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->relative(false); DPRINT("LOCATION"); }
+    { (yyval.destinationval) = (yyvsp[(2) - (2)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->backsteps((yyvsp[(1) - (2)].intval));
+                                                           if((yyval.destinationval)) (yyval.destinationval)->relative(true ); DPRINT("LOCATION"); }
     break;
 
   case 19:
 /* Line 1792 of yacc.c  */
-#line 113 "Grammar.ypp"
+#line 114 "Grammar.ypp"
     { (yyval.intval)=0; }
     break;
 
   case 20:
 /* Line 1792 of yacc.c  */
-#line 114 "Grammar.ypp"
+#line 115 "Grammar.ypp"
     { (yyval.intval) = (yyvsp[(1) - (2)].intval)+1; DPRINT("LOCATION_PREFIX"); }
     break;
 
   case 21:
 /* Line 1792 of yacc.c  */
-#line 117 "Grammar.ypp"
+#line 118 "Grammar.ypp"
     { (yyval.destinationval) = (yyvsp[(1) - (3)].destinationval); if((yyval.destinationval)) (yyval.destinationval)->appendLocation(*(yyvsp[(3) - (3)].stringval )); delete (yyvsp[(3) - (3)].stringval );
                                                            DPRINT("LOCATION_BODY"); }
     break;
 
   case 22:
 /* Line 1792 of yacc.c  */
-#line 119 "Grammar.ypp"
+#line 120 "Grammar.ypp"
     { (yyval.destinationval) = new Destination(*(yyvsp[(1) - (1)].stringval )); delete (yyvsp[(1) - (1)].stringval ); DPRINT("LOCATION_BODY"); }
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1685 "Grammar.tab.cpp"
+#line 1686 "Grammar.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1920,7 +1921,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 121 "Grammar.ypp"
+#line 122 "Grammar.ypp"
 
 void fyyerror (char const *s)
 {

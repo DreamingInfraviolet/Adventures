@@ -107,8 +107,9 @@ CHOICE              : tchoice tbracket_curly_open HEADER GOTO tbracket_curly_clo
 
 GOTO                : tgoto LOCATION                     { $$ = $2; DPRINT("GOTO"); };
 
-LOCATION            : LOCATION_PREFIX      LOCATION_BODY { $$ = $2; if($$) $$->backsteps($1); if($$) $$->relative(true ); DPRINT("LOCATION"); }
-                    | tdiv LOCATION_BODY { $$ = $2; if($$) $$->relative(false); DPRINT("LOCATION"); };
+LOCATION            : tdiv LOCATION_BODY                 { $$ = $2; if($$) $$->relative(false); DPRINT("LOCATION"); };
+                    | LOCATION_PREFIX LOCATION_BODY      { $$ = $2; if($$) $$->backsteps($1);
+                                                           if($$) $$->relative(true ); DPRINT("LOCATION"); }
 
 LOCATION_PREFIX      : { $$=0; }
                      | LOCATION_PREFIX tfullstop         { $$ = $1+1; DPRINT("LOCATION_PREFIX"); };
