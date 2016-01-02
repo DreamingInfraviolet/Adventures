@@ -3,13 +3,13 @@
     //Custom code goes here
     #include <string>
     #include <vector>
-    #include "ParseNodes/choice.h"
-    #include "ParseNodes/section.h"
-    #include "ParseNodes/scene.h"
-    #include "ParseNodes/fstring.h"
-    #include "ParseNodes/header.h"
-    #include "ParseNodes/destination.h"
-    #include "parser.h"
+    #include "choice.h"
+    #include "section.h"
+    #include "scene.h"
+    #include "fstring.h"
+    #include "header.h"
+    #include "destination.h"
+    #include "fparser.h"
     using namespace fabula::parsing::node;
 
     void fyyerror (char const *s);

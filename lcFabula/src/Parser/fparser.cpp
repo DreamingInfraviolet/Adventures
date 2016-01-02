@@ -1,9 +1,9 @@
-#include "parser.h"
+#include "fparser.h"
 #include "log.h"
 #include <istream>
 #include <ostream>
 #include <cassert>
-#include "ParseNodes/section.h"
+#include "section.h"
 #include "FlexLexer.h"
 #include <atomic>
 
@@ -77,8 +77,15 @@ namespace fabula
 				wasAlreadyParsing = true;
 
 			fyyparse();
-			mParseTree->initiateParentBinding(nullptr);
-			mParseTree->checkSemantics();
+			if (mParseTree)
+			{
+				mParseTree->initiateParentBinding(nullptr);
+				mParseTree->checkSemantics();
+			}
+			else
+			{
+				//there was an error
+			}
 
 			wasAlreadyParsing = false;
 		}
@@ -90,7 +97,7 @@ namespace fabula
 			mParseTree = result;
 		}
 
-		void Parser::write(Writer& writer, std::ostream& stream)
+		void Parser::write(Writer& writer)
 		{
 			if (mParseTree)
 				mParseTree->write(writer);

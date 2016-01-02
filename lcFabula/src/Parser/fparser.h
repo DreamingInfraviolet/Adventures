@@ -56,7 +56,7 @@ namespace fabula
 			void setParseResult(fabula::parsing::node::Section* result);
 
 			/** Writes the parse tree to a stream. */
-			void write(Writer& writer, std::ostream& stream);
+			void write(Writer& writer);
         };
     }
 }

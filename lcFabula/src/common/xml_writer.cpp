@@ -36,7 +36,7 @@ namespace fabula
 		void XmlWriter::writeBytes(const std::string& bytes)
 		{
 			indent(indentationLevel);
-			stream << bytes << "\n";
+			stream << "\"" << bytes << "\"" << "\n";
 		}
 	}
 }

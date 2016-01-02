@@ -2,12 +2,12 @@
  #define YY_NO_UNISTD_H
  #include <string>
  #include <vector>
- #include "ParseNodes/section.h"
- #include "ParseNodes/fstring.h"
- #include "ParseNodes/scene.h"
- #include "ParseNodes/choice.h"
- #include "ParseNodes/header.h"
- #include "ParseNodes/destination.h"
+ #include "section.h"
+ #include "fstring.h"
+ #include "scene.h"
+ #include "choice.h"
+ #include "header.h"
+ #include "destination.h"
  using namespace fabula::parsing::node;
  #include "Grammar.tab.hpp"
 
