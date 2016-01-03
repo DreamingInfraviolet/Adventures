@@ -6,6 +6,9 @@
 #include "section.h"
 #include "FlexLexer.h"
 #include <atomic>
+#include "visitor_parent_binder.h"
+#include "visitor_semantic_checker.h"
+#include "visitor_writer.h"
 
 extern int fyyparse();
 static yyFlexLexer lexer;
@@ -79,8 +82,10 @@ namespace fabula
 			fyyparse();
 			if (mParseTree)
 			{
-				mParseTree->initiateParentBinding(nullptr);
-				mParseTree->checkSemantics();
+				VisitorParentBinder vp;
+				VisitorSemanticChecker vs;
+				vp.visit(*mParseTree);
+				vs.visit(*mParseTree);
 			}
 			else
 			{
@@ -105,7 +110,10 @@ namespace fabula
 		void Parser::write(Writer& writer)
 		{
 			if (mParseTree)
-				mParseTree->write(writer);
+			{
+				VisitorWriter vw(writer);
+				vw.visit(*mParseTree);
+			}
 		}
 	}
 }

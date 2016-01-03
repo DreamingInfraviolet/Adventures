@@ -22,10 +22,10 @@ namespace fabula
 
 			class Destination : public ParseNode
 			{
-			public:
 				std::vector<std::string> mLocationChain;
 				int                 mBacksteps      = 0;
 				bool                mRelative       = true;
+			public:
 
 				/** Initialises an empty destination . */
 				Destination();
@@ -54,19 +54,16 @@ namespace fabula
 				/** Returns the corresponding node type of the class. */
 				virtual NodeType nodeType();
 
-				/** Notifies all children that this is the parent, and calls bindChildren on them. */
-				virtual void bindChildren();
-
-				/** Performs semantic error detection, throwing an exception if failed. */
-				virtual void checkSemantics();
-
 				/** Returns the pointer to a scene if one exists, inferred from the destination.
 				  * Assumes that parent has been bound.
 				  * Throws a SemanticException if requested ^_^ Otherwise returns null upon failure. */
 				Scene* getScene(bool throwSemanticException = false);
 
-				/** Writes the node to a writer class. */
-				virtual void write(Writer& writer);
+				/** Returns an iterator to the start of the destination chain. */
+				std::vector<std::string>::iterator begin();
+
+				/** Returns an iterator to the end of the destination chain. */
+				std::vector<std::string>::iterator end();
 			};
 		}
 	}

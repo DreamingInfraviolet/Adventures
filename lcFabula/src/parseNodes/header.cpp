@@ -1,5 +1,5 @@
 #include "header.h"
-#include "writer.h"
+#include "parse_tree_visitor.h"
 
 namespace fabula
 {
@@ -20,25 +20,16 @@ namespace fabula
 				return NodeType::Header;
 			}
 
-			void Header::bindChildren()
+			String& Header::title()
 			{
-				mTitle.initiateParentBinding(this);
-				mDescription.initiateParentBinding(this);
+				return mTitle;
 			}
 
-			void Header::checkSemantics()
+			String& Header::description()
 			{
-				mTitle.checkSemantics();
-				mDescription.checkSemantics();
+				return mDescription;
 			}
 
-			void Header::write(Writer& writer)
-			{
-				writer.push("header");
-				mTitle.write(writer);
-				mDescription.write(writer);
-				writer.pop();
-			}
         }
     }
 }

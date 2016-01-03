@@ -3,7 +3,7 @@
 #include "choice.h"
 #include "destination.h"
 #include <cassert>
-#include "writer.h"
+#include "parse_tree_visitor.h"
 
 namespace fabula
 {
@@ -55,60 +55,20 @@ namespace fabula
 				return NodeType::Scene;
 			}
 
-			void Scene::bindChildren()
+			Header& Scene::header()
 			{
-				if (mHeader)
-					mHeader->initiateParentBinding(this);
-
-				if (mChoices)
-					for (Choice* choice : *mChoices)
-					{
-						assert(choice);
-						choice->initiateParentBinding(this);
-					}
-
-				if (mDestination)
-					mDestination->initiateParentBinding(this);
+				assert(mHeader);
+				return *mHeader;
 			}
 
-			void Scene::checkSemantics()
+			std::vector<Choice*>* Scene::choices()
 			{
-				if (mHeader)
-					mHeader->checkSemantics();
-
-				if (mChoices)
-					for (Choice* choice : *mChoices)
-					{
-						assert(choice);
-						choice->checkSemantics();
-					}
-
-				if (mDestination)
-					mDestination->checkSemantics();
+				return mChoices;
 			}
 
-			void Scene::write(Writer& writer)
+			Destination* Scene::destination()
 			{
-				writer.push("scene", { {"name", mName} });
-
-				if (mHeader)
-					mHeader->write(writer);
-				else //write empty header
-					Header().write(writer);
-
-				writer.push("choices");
-				if (mChoices)
-					for (Choice* choice : *mChoices)
-					{
-						assert(choice);
-						choice->write(writer);
-					}
-				writer.pop();
-
-				if (mDestination)
-					mDestination->write(writer);
-
-				writer.pop();
+				return mDestination;
 			}
         }
     }

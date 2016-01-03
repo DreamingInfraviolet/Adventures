@@ -1,8 +1,8 @@
 #include "choice.h"
 #include "header.h"
 #include "destination.h"
-#include "writer.h"
 #include <cassert>
+#include "parse_tree_visitor.h"
 
 namespace fabula
 {
@@ -24,30 +24,16 @@ namespace fabula
 				return NodeType::Choice;
 			}
 
-			void Choice::bindChildren()
+			Header& Choice::header()
 			{
-				if(mHeader)
-					mHeader->initiateParentBinding(this);
-				if(mDestination)
-					mDestination->initiateParentBinding(this);
+				assert(mHeader);
+				return *mHeader;
 			}
 
-			void Choice::checkSemantics()
+			Destination& Choice::destination()
 			{
-				if (mHeader)
-					mHeader->checkSemantics();
-				if (mDestination)
-					mDestination->checkSemantics();
-			}
-
-			void Choice::write(fabula::parsing::Writer& writer)
-			{
-				writer.push("choice");
-				if (mHeader)
-					mHeader->write(writer);
-				if (mDestination)
-					mDestination->write(writer);
-				writer.pop();
+				assert(mDestination);
+				return *mDestination;
 			}
         }
     }

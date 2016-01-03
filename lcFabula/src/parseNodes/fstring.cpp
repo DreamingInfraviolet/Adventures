@@ -1,5 +1,5 @@
 #include "fstring.h"
-#include "writer.h"
+#include "parse_tree_visitor.h"
 
 namespace fabula
 {
@@ -13,27 +13,14 @@ namespace fabula
 
             String::String(const char* string) : _str(string) { purifyString(); }
 
-            const std::string& String::str() const { return _str; }
-
 			ParseNode::NodeType String::nodeType()
 			{
 				return NodeType::String;
 			}
 
-			void String::bindChildren()
+			std::string& String::string()
 			{
-
-			}
-
-			void String::checkSemantics()
-			{
-			}
-
-			void String::write(Writer& writer)
-			{
-				writer.push("string");
-				writer.writeBytes(str());
-				writer.pop();
+				return _str;
 			}
 
 			void String::purifyString()

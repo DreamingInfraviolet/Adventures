@@ -4,8 +4,8 @@
 #include "section.h"
 #include "parse_exception.h"
 #include "choice.h"
-#include "writer.h"
 #include "util.h"
+#include "parse_tree_visitor.h"
 
 namespace fabula
 {
@@ -47,15 +47,6 @@ namespace fabula
 			ParseNode::NodeType Destination::nodeType()
 			{
 				return NodeType::Destination;
-			}
-
-			void Destination::bindChildren()
-			{
-			}
-
-			void Destination::checkSemantics()
-			{
-				getScene(true);
 			}
 
 			Scene * Destination::getScene(bool throwSemanticException)
@@ -145,17 +136,14 @@ namespace fabula
 				mRelative = r;
 			}
 
-			void Destination::write(Writer& writer)
+			std::vector<std::string>::iterator Destination::begin()
 			{
-				writer.push("destination", { {"backsteps",	toString(mBacksteps)},
-				                              {"relative", mRelative ? "1":"0"} });
-				for (auto it = mLocationChain.begin(); it != mLocationChain.end() - 1; ++it)
-				{
-					writer.push("link");
-					writer.writeBytes(*it);
-					writer.pop();
-				}
-				writer.pop();
+				return mLocationChain.begin();
+			}
+
+			std::vector<std::string>::iterator Destination::end()
+			{
+				return mLocationChain.end();
 			}
 		}
 	}

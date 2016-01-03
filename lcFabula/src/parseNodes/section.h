@@ -21,10 +21,10 @@ namespace fabula
 
 		    class Section : public ParseNode
 		    {
-			public:
 				std::string                     mName;
 				std::map<std::string, Scene*>   mScenes;
 				std::map<std::string, Section*> mSubsections;
+			public:
 
 
 				/** Initialises an empty section with no children. */
@@ -39,6 +39,18 @@ namespace fabula
 				/** Returns the name of the section. */
 				std::string name() const;
 
+				/** Returns start scenes iterator. */
+				std::map<std::string, Scene*>::iterator scenesBegin();
+
+				/** Returns end scenes iterator. */
+				std::map<std::string, Scene*>::iterator scenesEnd();
+
+				/** Returns the start subsections iterator. */
+				std::map<std::string, Section*>::iterator sectionsBegin();
+
+				/** Returns the end subsections iterator. */
+				std::map<std::string, Section*>::iterator sectionsEnd();
+
 				/** Adds a child section, taking ownership of the argument. */
 				void add(Section* s);
 
@@ -47,12 +59,6 @@ namespace fabula
 
 				/** Returns the corresponding node type of the class. */
 				virtual NodeType nodeType();
-
-				/** Notifies all children that this is the parent, and calls bindChildren on them. */
-				virtual void bindChildren();
-
-				/** Performs semantic error detection, throwing an exception if failed. */
-				virtual void checkSemantics();
 
 				/** returns whether the section has a subsection with a given name. */
 				bool hasSubsection (const std::string& name) const;
@@ -65,9 +71,6 @@ namespace fabula
 
 				/** Returns a scene given a name, returning null if none exists. */
 				Scene* getScene(const std::string& name);
-
-				/** Writes the node to a writer class. */
-				virtual void write(fabula::parsing::Writer& writer);
 		    };
 		}
 	}

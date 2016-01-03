@@ -19,8 +19,8 @@ namespace fabula
         {
             class String : public ParseNode
             {
-            public:
                 std::string _str;
+            public:
 
                 /** Constructs the empty string. */
         		String();
@@ -31,23 +31,14 @@ namespace fabula
                 /** Constructs the string from a character pointer. */
         		String(const char* string);
 
-                /** Returns the internal std::string object. */
-        		const std::string& str() const;
-
 				/** Returns the corresponding node type of the class. */
 				virtual NodeType nodeType();
 
-				/** Notifies all children that this is the parent, and calls bindChildren on them. */
-				virtual void bindChildren();
-
-				/** Performs semantic error detection, throwing an exception if failed. */
-				virtual void checkSemantics();
-
-				/** Writes the node to a writer class. */
-				virtual void write(fabula::parsing::Writer& writer);
-
 				/** Tidies the string, clening \", etc. */
 				void purifyString();
+
+				/** Returns the internal string. */
+				std::string& string();
             };
         }
     }

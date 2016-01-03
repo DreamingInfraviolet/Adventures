@@ -17,9 +17,9 @@ namespace fabula
         {
             class Header : public ParseNode
             {
-            public:
                 String mTitle, mDescription;
 
+            public:
                 /** Initialises an empty header. */
                 Header();
 
@@ -32,14 +32,11 @@ namespace fabula
 				/** Returns the corresponding node type of the class. */
 				virtual NodeType nodeType();
 
-				/** Notifies all children that this is the parent, and calls bindChildren on them. */
-				virtual void bindChildren();
+				/** Returns the title. */
+				String& title();
 
-				/** Performs semantic error detection, throwing an exception if failed. */
-				virtual void checkSemantics();
-
-				/** Writes the node to a writer class. */
-				virtual void write(Writer& writer);
+				/** Returns the description. */
+				String& description();
             };
         }
     }

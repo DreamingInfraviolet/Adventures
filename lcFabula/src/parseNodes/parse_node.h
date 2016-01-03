@@ -11,6 +11,7 @@ namespace fabula
     namespace parsing
     {
 		class Writer;
+		class ParseTreeVisitor;
 
         namespace node
         {
@@ -23,29 +24,13 @@ namespace fabula
                 /** Returns the corresponding node type of the class. */
                 virtual NodeType nodeType() = 0;
 
-                /** Sets the parent of the object and prompts it to set itself as a parent to its children. */
-				void initiateParentBinding(ParseNode* parent)
-				{
-					mParent = parent;
-					bindChildren();
-				}
-
-                /** Performs semantic error detection, throwing an exception if failed. */
-                virtual void checkSemantics() = 0;
-
-				virtual void write(Writer& writer) = 0;
-
-			protected:
-				/** Calls initiateParentBinding on all its children. */
-				virtual void bindChildren() = 0;
-
 			private:
                 // The parent, if any.
 				ParseNode* mParent = nullptr;
 
 			public:
-
 				ParseNode* parent() { return mParent; }
+				void parent(ParseNode* parent) { mParent = parent; }
 
             }; 
         }

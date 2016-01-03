@@ -23,12 +23,12 @@ namespace fabula
 
 			class Scene : public ParseNode
 			{
-			public:
 			    std::string           mName;
 			    Header*               mHeader      = nullptr;
 			    std::vector<Choice*>* mChoices     = nullptr;
 			    Destination*          mDestination = nullptr;
 
+			public:
 
 				/** Initialises a fully empty scene. */
 			    Scene();
@@ -57,14 +57,14 @@ namespace fabula
 				/** Returns the corresponding node type of the class. */
 				virtual NodeType nodeType();
 
-				/** Notifies all children that this is the parent, and calls bindChildren on them. */
-				virtual void bindChildren();
+				/** Returns the header of the scene. */
+				Header& header();
 
-				/** Performs semantic error detection, throwing an exception if failed. */
-				virtual void checkSemantics();
+				/** Returns the choices. May be null. */
+				std::vector<Choice*>* choices();
 
-				/** Writes the node to a writer class. */
-				virtual void write(Writer& writer);
+				/** Returns the optional destination of the scene. May be null. */
+				Destination* destination();
 			};
 		}
 	}

@@ -41,30 +41,30 @@ void handleScene(Scene* scene, Section* parent)
 
 	//Header
 	writer.push("h1");
-	writer.writeBytes(scene->mHeader->mTitle._str);
+	writer.writeBytes(scene->header().title().string());
 	writer.pop();
 	writer.br();
 	writer.push("h2");
-	writer.writeBytes(scene->mHeader->mDescription._str);
+	writer.writeBytes(scene->header().description().string());
 	writer.pop();
 	writer.br();
 	writer.br();
 
 	//Write choices
 	writer.push("ul");
-	if(scene->mChoices)
-		for (Choice* c : *scene->mChoices)
+	if(scene->choices())
+		for (Choice* c : *scene->choices())
 		{
-			Scene* dest = c->mDestination->getScene();
+			Scene* dest = c->destination().getScene();
 			Section* destS = dynamic_cast<Section*>(dest->parent());
 
 			writer.push("li");
 			writer.push("a", { {"href", getPrefix(destS) + "." + dest->name() + ".html"} });
 			writer.push("h3");
-			writer.writeBytes(c->mHeader->mTitle._str);
+			writer.writeBytes(c->header().title().string());
 			writer.pop();//h3
 			writer.push("h2");
-			writer.writeBytes(c->mHeader->mDescription._str);
+			writer.writeBytes(c->header().description().string());
 			writer.pop();//h2
 			writer.pop();//a
 			writer.pop();//li
@@ -78,11 +78,11 @@ void handleScene(Scene* scene, Section* parent)
 void handleSection(Section* section)
 {
 	//Write each scene
-	for (auto scene = section->mScenes.begin(); scene != section->mScenes.end(); ++scene)
+	for (auto scene = section->scenesBegin(); scene != section->scenesEnd(); ++scene)
 		handleScene(scene->second, section);
 
 	//Handle each subsections
-	for (auto s = section->mSubsections.begin(); s != section->mSubsections.end(); ++s)
+	for (auto s = section->sectionsBegin(); s != section->sectionsEnd(); ++s)
 		handleSection(s->second);
 
 }

@@ -3,7 +3,7 @@
 #include <cassert>
 #include "parse_exception.h"
 #include <set>
-#include "writer.h"
+#include "parse_tree_visitor.h"
 
 namespace fabula
 {
@@ -56,36 +56,24 @@ namespace fabula
 				return NodeType::Section;
 			}
 
-			void Section::bindChildren()
+			std::map<std::string, Scene*>::iterator Section::scenesBegin()
 			{
-				for (auto it = mScenes.begin(); it != mScenes.end(); ++it)
-				{
-					assert(it->second);
-					it->second->initiateParentBinding(this);
-				}
-				for (auto it = mSubsections.begin(); it != mSubsections.end(); ++it)
-				{
-					assert(it->second);
-					it->second->initiateParentBinding(this);
-				}
+				return mScenes.begin();
 			}
 
-			void Section::checkSemantics()
+			std::map<std::string, Scene*>::iterator Section::scenesEnd()
 			{
-				//In this rather unique scenario, the semantics are guaranteed to be already checked
-				//due to how the values are stored in a map for efficiency and were checked beforehand.
-				//So just call the method on the children instead ^.^
+				return mScenes.end();
+			}
 
-				for (auto it = mScenes.begin(); it != mScenes.end(); ++it)
-				{
-					assert(it->second);
-					it->second->checkSemantics();
-				}
-				for (auto it = mSubsections.begin(); it != mSubsections.end(); ++it)
-				{
-					assert(it->second);
-					it->second->checkSemantics();
-				}
+			std::map<std::string, Section*>::iterator Section::sectionsBegin()
+			{
+				return mSubsections.begin();
+			}
+
+			std::map<std::string, Section*>::iterator Section::sectionsEnd()
+			{
+				return mSubsections.end();
 			}
 
 			bool Section::hasSubsection (const std::string& name) const
@@ -114,25 +102,6 @@ namespace fabula
 					return nullptr;
 				else
 					return it->second;
-			}
-
-
-			void Section::write(fabula::parsing::Writer& writer)
-			{
-				writer.push("section", { {"name", mName} });
-
-				for (auto it = mScenes.begin(); it != mScenes.end(); ++it)
-				{
-					assert(it->second);
-					it->second->write(writer);
-				}
-				for (auto it = mSubsections.begin(); it != mSubsections.end(); ++it)
-				{
-					assert(it->second);
-					it->second->write(writer);
-				}
-
-				writer.pop();
 			}
         }
     }
