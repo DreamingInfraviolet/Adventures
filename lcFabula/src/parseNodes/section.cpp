@@ -78,12 +78,12 @@ namespace fabula
 
 			bool Section::hasSubsection (const std::string& name) const
 			{
-				return mSubsections.count(name);
+				return (bool)mSubsections.count(name);
 			}
 
 			bool Section::hasScene (const std::string& name) const
 			{
-				return mScenes.count(name);
+				return (bool)mScenes.count(name);
 			}
 
 			Section * Section::getSubsection(const std::string& name)

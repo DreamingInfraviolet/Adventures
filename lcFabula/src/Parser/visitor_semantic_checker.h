@@ -16,6 +16,8 @@ namespace fabula
 
         class VisitorSemanticChecker : public ParseTreeVisitor
         {
+			int mNumberOfStartPointsFound = 0;
+
             public:
                 virtual void visit(node::Scene& in);
                 virtual void visit(node::Section& in);

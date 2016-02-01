@@ -1,6 +1,7 @@
 #include "visitor_semantic_checker.h"
 #include "parse_nodes.h"
 #include <cassert>
+#include "parse_exception.h"
 
 namespace fabula
 {
@@ -8,6 +9,13 @@ namespace fabula
     {
         void VisitorSemanticChecker::visit(node::Scene& in)
         {
+			if (in.name() == "main")
+			{
+				++mNumberOfStartPointsFound;
+				if (mNumberOfStartPointsFound > 1)
+					throw SemanticException("Multiple 'main' scenes found.");
+			}
+
 			visit(in.header());
 			if (in.choices())
 				for (node::Choice* choice : *in.choices())
@@ -36,6 +44,12 @@ namespace fabula
                 assert(it->second);
                 visit(*it->second);
             }
+
+			//If this is the final section and we haven't found a main scene:
+			if (in.parent() == nullptr && !mNumberOfStartPointsFound)
+			{
+				throw SemanticException("No 'main' scene found.");
+			}
         }
 
         void VisitorSemanticChecker::visit(node::String& in)
