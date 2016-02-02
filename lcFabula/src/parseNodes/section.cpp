@@ -103,6 +103,21 @@ namespace fabula
 				else
 					return it->second;
 			}
+
+			Scene* Section::findStartScene()
+			{
+				if (hasScene("main"))
+					return getScene("main");
+				else for (auto s = sectionsBegin(); s != sectionsEnd(); ++s)
+				{
+					assert(s->second);
+					Scene* sc = s->second->findStartScene();
+					if (sc)
+						return sc;
+				}
+
+				return nullptr;
+			}
         }
     }
 }

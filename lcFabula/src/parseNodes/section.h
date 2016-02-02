@@ -71,6 +71,10 @@ namespace fabula
 
 				/** Returns a scene given a name, returning null if none exists. */
 				Scene* getScene(const std::string& name);
+
+				/** Scans the section and any subsections for a scene with the name "main",
+				  * and returns the first one found. Should be safe after the semantic checks. */
+				Scene* findStartScene();
 		    };
 		}
 	}
