@@ -1,46 +1,39 @@
+#include "stdafx.h"
 #include "virtualtilegrid.h"
-#include "world.h"
 #include "layer.h"
-#include <math.h>
 #include "io.h"
-#include "pixelrgba.h"
+#include "canvas.h"
+#include "canvas_helper.h"
 
-//tile size: 1, or 100 pixels.
-//brush size: d=2.4,or d=240 pixels.
+using namespace canvas_helper;
 
-VirtualTileGrid::VirtualTileGrid(World *world, const Rectanglef &rectangle, Layer* layer)
-    : mWorld(world), mRect(rectangle), mLayer(layer)
+VirtualTileGrid::VirtualTileGrid(Layer& layer, const util::Rectanglef &rectangle, int tileResolution)
+    : mLayer(layer), tileResolution(tileResolution), mRect(rectangle)
 {
-    startGridIndex = world->getTileIndex(math::vec2(rectangle.leftEdge(),rectangle.bottomEdge()));
-    endGridIndex = world->getTileIndex(math::vec2(rectangle.rightEdge(),rectangle.topEdge()))+1;
+	float fTileResolution = (float)tileResolution;
+    startGridIndex = getTileIndex(math::vec2(rectangle.leftEdge(),rectangle.bottomEdge()));
+    endGridIndex = getTileIndex(math::vec2(rectangle.rightEdge(),rectangle.topEdge()))+1;
     gridSize = endGridIndex-startGridIndex;
 
-    mSize = math::vec2i((int)(rectangle.w()*mWorld->tileResolution()),(int)(rectangle.h()*mWorld->tileResolution()));
+    mSize = math::vec2i((int)(rectangle.w()*fTileResolution),(int)(rectangle.h()*fTileResolution));
 
-    startPixels = mWorld->getCoordinatesInTile(math::vec2(mRect.x(),mRect.y()), startGridIndex);
-
+    startPixels = getCoordinatesInTile(math::vec2(mRect.x(),mRect.y()), startGridIndex, fTileResolution);
 
     mTileGrid.resize(gridSize.x);
     for(size_t x = 0; x < mTileGrid.size(); ++x)
     {
         mTileGrid[x].reserve(gridSize.y);
         for(int y = 0; y < gridSize.y; ++y)
-            mTileGrid[x].push_back(mLayer->createTile(startGridIndex+math::vec2i(x,y), world->tileResolution()));
+            mTileGrid[x].push_back(layer.createTile(startGridIndex+math::vec2i(x,y), fTileResolution));
     }
 }
 
-
-VirtualTileGrid::IntermediaryAccessClass VirtualTileGrid::operator [] (int location)
+uint32_t* VirtualTileGrid::getPixel (int xCoord, int yCoord)
 {
-    return IntermediaryAccessClass(location, this);
-}
+    math::vec2i coordsWithOffset = startPixels+math::vec2i(xCoord,yCoord);
 
-PixelRGBA& VirtualTileGrid::IntermediaryAccessClass::operator [] (int yCoord)
-{
-    math::vec2i coordsWithOffset = mParent->startPixels+math::vec2i(xCoord,yCoord);
+    math::vec2i tile = coordsWithOffset/tileResolution;
+    math::vec2i pixelPos = coordsWithOffset % tileResolution;
 
-    math::vec2i tile = coordsWithOffset/mParent->mWorld->tileResolution();
-    math::vec2i pixelPos = coordsWithOffset % mParent->mWorld->tileResolution();
-
-    return mParent->mTileGrid[tile.x][tile.y]->getPixelRef(pixelPos.x, pixelPos.y);
+    return mTileGrid[tile.x][tile.y]->getPixelRef(pixelPos.x, pixelPos.y);
 }

@@ -1,10 +1,11 @@
+#include "stdafx.h"
 #include "cursor.h"
 #include "glwidget.h"
 
 Cursor::Cursor()
 {
     mImage.setSize(2,2);
-    mImage.fill(PixelRGBA(0,255,0));
+    mImage.fill(0,255,0,255);
     mImage.upload();
 }
 
@@ -13,7 +14,6 @@ void Cursor::globalPos(const math::vec2& normalisedScreenPos, const math::mat3& 
 {
     mGlobalPos = (cameraMatrix.getInverse()*math::vec3(normalisedScreenPos,1)).xy();
 }
-
 
 void Cursor::draw(const math::mat3& cameraMatrix, MainShader& shader)
 {
@@ -25,7 +25,6 @@ void Cursor::draw(const math::mat3& cameraMatrix, MainShader& shader)
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
-
 
 math::vec2 Cursor::globalPos() const
 {

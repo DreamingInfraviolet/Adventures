@@ -1,31 +1,23 @@
-#ifndef CANVAS_H
-#define CANVAS_H
+#pragma once
 #include "camera.h"
-#include "world.h"
 #include "mainshader.h"
+#include "layer.h"
 
 class Canvas
 {
 private:
-    World mWorld;
+	int mTileResolution;
 
 public:
+	std::vector<Layer> mLayers;
     Canvas();
-    Camera mCamera;
 
-    /**Zooms into the canvas by a set amount delta.*/
-    void zoom(float amount);
+	int layerCount() const;
+	Layer& createLayer();
+	Layer& getLayer(int index);
+	void deleteLayer(int index);
 
-    /**Pans the canvas by the deltas received in normalized units.*/
-    void pan(float x, float y);
+	void clear();
 
-    /**Draws the canvas.*/
-    void draw(MainShader& shader);
-
-    /**Performs changes necessary after resizing.*/
-    void resizeViewport(int w, int h);
-
-    void applyBrush(const math::vec2& worldPos);
+	int tileResolution();
 };
-
-#endif // CANVAS_H

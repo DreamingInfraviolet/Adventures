@@ -1,8 +1,6 @@
+#include "stdafx.h"
 #include "shaderprogram.h"
 #include "glwidget.h"
-#include <fstream>
-#include "../JuceLibraryCode/JuceHeader.h"
-#include <GL/glew.h>
 #include "io.h"
 
 bool ShaderProgram::validate()

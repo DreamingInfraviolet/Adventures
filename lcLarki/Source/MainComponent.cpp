@@ -1,31 +1,20 @@
-/*
-  ==============================================================================
+#include "stdafx.h"
 
-    This file was auto-generated!
 
-  ==============================================================================
-*/
-
-#ifndef MAINCOMPONENT_H_INCLUDED
-#define MAINCOMPONENT_H_INCLUDED
-
-#include <GL/glew.h>
-#include "../JuceLibraryCode/JuceHeader.h"
-#include <stdexcept>
-#include <memory>
 #include "mainshader.h"
 #include "camera.h"
 #include "cursor.h"
 #include "vertex.h"
 #include "canvas.h"
+#include "operation_apply_brush.h"
+#include "canvas_view.h"
+#include "operation_render.h"
 #pragma comment(lib, "C:\\Users\\light\\Documents\\glew-1.13.0\\lib\\Debug\\Win32\\glew32d.lib")
 
 class Canvas;
 class Cursor;
 
 
-
-//==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
@@ -39,6 +28,7 @@ public:
 	math::vec2i mLastMousePosition;
 	math::vec2 mNormalisedMousePosition;
 	Cursor mCursor;
+	CanvasView mCanvasView;
 
 	struct
 	{
@@ -48,7 +38,8 @@ public:
 
 
     //==============================================================================
-    MainContentComponent()
+    MainContentComponent() :
+		mCanvasView(mCanvas, &mMainShader)
     {
         setSize (800, 600);
     }
@@ -64,7 +55,7 @@ public:
 		if (status != GLEW_OK)
 			throw std::runtime_error("Unable to initialise glew");
 
-		glClearColor(0, 1, 0, 1);
+		glClearColor(0, 0, 0, 1);
 		mMainShader.load("shaders/main.vert", "shaders/main.frag");
 		initialiseQuad();
 
@@ -104,11 +95,11 @@ public:
 		glClearColor(1, 1, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 		beginDraw();
-		mCanvas.draw(mMainShader);
-		mCursor.draw(mCanvas.mCamera.matrix(), mMainShader);
-
+		OperationRender().visit(&mCanvasView);
+		//mCursor.draw(mCanvas.mCamera.matrix(), mMainShader);
 		endDraw();
     }
+
 	void mouseDrag(const MouseEvent& e) override
 	{
 		math::vec2i position = math::vec2i(e.x, e.y);
@@ -120,22 +111,26 @@ public:
 
 		if (e.mods.isRightButtonDown()) //panning has priority.
 		{
-			mCanvas.pan(delta.x, delta.y);
+			mCanvasView.pan(delta.x, delta.y);
 		}
 		else if (e.mods.isLeftButtonDown())
 		{
-			mCanvas.applyBrush(mCursor.globalPos());
+			OperationApplyBrush op;
+			op.radius = 10;
+			op.worldPos = mCursor.globalPos();
+			op.visit(&mCanvas);
+
 		}
 
 		mLastMousePosition = math::vec2i(e.x, e.y);
 		mNormalisedMousePosition = math::vec2(((float)mLastMousePosition.x / this->getBounds().getWidth() - 0.5f) * 2,
 			((float)mLastMousePosition.y / this->getBounds().getHeight() - 0.5f)*-2);
-		mCursor.globalPos(mNormalisedMousePosition, mCanvas.mCamera.matrix());
+		mCursor.globalPos(mNormalisedMousePosition, mCanvasView.mCamera.matrix());
 	}
 
 	int mouseWheelMove(const MouseEvent &e, float wheelIncrementX, float wheelIncrementY) override
 	{
-		mCanvas.zoom(wheelIncrementY / 2000.f);
+		mCanvasView.zoom(wheelIncrementY / 2000.f);
 		return 0;
 	}
 
@@ -153,7 +148,7 @@ public:
         // update their positions.
 		Rectangle<int> bounds = getBounds();
 
-		mCanvas.resizeViewport(bounds.getWidth(), bounds.getHeight());
+		mCanvasView.resizeViewport(bounds.getWidth(), bounds.getHeight());
 		glViewport(0, 0, bounds.getWidth(), bounds.getHeight());
     }
 
@@ -176,18 +171,9 @@ public:
 
 
 private:
-    //==============================================================================
-
-    // private member variables
-
-
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
 
 
 // (This function is called by the app startup code to create our main component)
 Component* createMainContentComponent()    { return new MainContentComponent(); }
-
-
-#endif  // MAINCOMPONENT_H_INCLUDED

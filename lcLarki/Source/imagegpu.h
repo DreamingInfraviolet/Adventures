@@ -1,5 +1,4 @@
-#ifndef IMAGEGPU_H
-#define IMAGEGPU_H
+#pragma once
 #include "image.h"
 namespace anima
 {
@@ -16,11 +15,8 @@ namespace anima
 			ImageGPU();
 
 			void upload();
-
 			void deupload();
-
 			void set();
 		};
 	}
 }
-#endif // IMAGEGPU_H

@@ -1,7 +1,5 @@
 #pragma once
-#include <GL/glew.h>
 #include <io.h>
-#include <string>
 
 /**A virtual base class to give essential shader creation functionality to derived classes.*/
 class ShaderProgram

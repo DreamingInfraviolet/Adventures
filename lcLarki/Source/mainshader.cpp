@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "mainshader.h"
-#include <GL/glew.h>
 #include "io.h"
 
 MainShader::MainShader()

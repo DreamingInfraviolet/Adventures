@@ -1,18 +1,21 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#pragma once
 
 #include "imagegpu.h"
 #include "matrixd.h"
-
-template <class CoordType>
-class Sprite : public ImageGPU
+namespace anima
 {
-private:
-    math::tmp::_vec2<CoordType> mPos;
-public:
-    Sprite();
+	namespace graphics
+	{
+		template <class CoordType>
+		class Sprite : public ImageGPU
+		{
+		private:
+		public:
+			math::tmp::_vec2<CoordType> mPos;
+			Sprite() {}
+		};
 
-
-};
-
-#endif // SPRITE_H
+		typedef Sprite<int> ISprite;
+		typedef Sprite<float> FSprite;
+	}
+}

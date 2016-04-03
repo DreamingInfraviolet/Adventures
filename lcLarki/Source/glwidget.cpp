@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include "stdafx.h"
 #include "glwidget.h"
 #include "cursor.h"
 #include "canvas.h"

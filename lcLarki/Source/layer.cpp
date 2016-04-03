@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "layer.h"
 
 Layer::Layer()
@@ -5,16 +6,16 @@ Layer::Layer()
 
 }
 
-anima::graphics::Tile* Layer::createTile(const math::vec2i& index, int resolution)
+anima::graphics::ISprite* Layer::createTile(const math::vec2i& index, int resolution)
 {
     auto it = mTiles.find(index);
 
     //if tile does not exist, create it.
     if(it==mTiles.end())
     {
-		anima::graphics::Tile tile;
+		anima::graphics::ISprite tile;
         tile.setSize(resolution, resolution);
-        tile.fill(PixelRGBA(0,0,0,0));
+        tile.fill(0,0,0,0);
 
         tile.upload();
         auto newIterator = mTiles.insert(std::make_pair(index, std::move(tile))).first;
@@ -26,7 +27,7 @@ anima::graphics::Tile* Layer::createTile(const math::vec2i& index, int resolutio
     }
 }
 
-anima::graphics::Tile* Layer::getTile(const math::vec2i& index)
+anima::graphics::ISprite* Layer::getTile(const math::vec2i& index)
 {
     auto it = mTiles.find(index);
     if(it==mTiles.end())

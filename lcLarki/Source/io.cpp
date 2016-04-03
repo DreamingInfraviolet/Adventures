@@ -1,6 +1,6 @@
+#include "stdafx.h"
 #include <string>
 #include <iostream>
-#include "../JuceLibraryCode/JuceHeader.h"
 
 void Inform(const std::string& message)
 {
