@@ -8,7 +8,7 @@ class OperationRender : public CanvasViewVisitor
 public:
 	CanvasView* canvasView;
 
-	virtual ~OperationRender() = 0;
+	virtual ~OperationRender() {};
 
 	virtual void visit(CanvasView* view) override;
 	virtual void visit(anima::graphics::ISprite* tile) override;

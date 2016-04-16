@@ -5,7 +5,7 @@
 class CanvasViewVisitor : public CanvasVisitor
 {
 public:
-	virtual ~CanvasViewVisitor() = 0;
+	virtual ~CanvasViewVisitor() {};
 
 	virtual void visit(CanvasView* view)
 	{

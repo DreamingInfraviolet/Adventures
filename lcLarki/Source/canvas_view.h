@@ -12,7 +12,7 @@ public:
 	Canvas& mCanvas;
 	MainShader* shader;
 	CanvasView(Canvas& canvas, MainShader* shader)
-		: mCanvas(canvas)
+		: mCanvas(canvas), shader(shader)
 	{
 		mCamera.zoom(2.f);
 	}

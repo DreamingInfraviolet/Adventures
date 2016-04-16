@@ -33,7 +33,6 @@ public:
 		for (int x = 0; x < vtg.width(); ++x)
 			for (int y = 0; y < vtg.height(); ++y)
 			{
-				int radius = 128;
 				auto d = math::vec2i(x, y).distanceSquared(middle);
 				uint32_t pixel = d>radius ? 0u:~0u;
 				*vtg.getPixel(x,y)=pixel;

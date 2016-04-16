@@ -95,7 +95,8 @@ public:
 		glClearColor(1, 1, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 		beginDraw();
-		OperationRender().visit(&mCanvasView);
+		OperationRender ore;
+		ore.visit(&mCanvasView);
 		//mCursor.draw(mCanvas.mCamera.matrix(), mMainShader);
 		endDraw();
     }
