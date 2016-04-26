@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "shaderprogram.h"
-#include "glwidget.h"
 #include "io.h"
 
 bool ShaderProgram::validate()

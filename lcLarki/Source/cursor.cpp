@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "cursor.h"
-#include "glwidget.h"
 
 Cursor::Cursor()
 {

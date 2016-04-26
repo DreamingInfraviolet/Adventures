@@ -18,7 +18,7 @@ public:
 			visit(&itTile->second);
 	}
 
-	virtual void visit(anima::graphics::ISprite* tile)
+	virtual void visit(anima::graphics::ISprite*)
 	{
 
 	}

@@ -36,4 +36,12 @@ uint32_t* VirtualTileGrid::getPixel (int xCoord, int yCoord)
     math::vec2i pixelPos = coordsWithOffset % tileResolution;
 
     return mTileGrid[tile.x][tile.y]->getPixelRef(pixelPos.x, pixelPos.y);
+
+}
+
+void VirtualTileGrid::upload()
+{
+	for (auto& a : mTileGrid)
+		for (auto& b : a)
+			b->upload();
 }

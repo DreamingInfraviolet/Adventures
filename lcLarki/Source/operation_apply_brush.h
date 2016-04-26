@@ -19,6 +19,7 @@ public:
 	virtual void visit(Canvas* canvas) override
 	{
 		tileResolution = canvas->tileResolution();
+		CanvasVisitor::visit(canvas);
 	}
 
 	virtual void visit(Layer* layer) override

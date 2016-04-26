@@ -10,6 +10,23 @@ class Layer
 
 public:
     Layer();
+	Layer(const Layer&) = delete;
+	Layer(Layer&& layer)
+	{
+		moveIntoSelf(std::move(layer));
+	}
+
+	Layer& operator = (Layer&& im)
+	{
+		if (this != &im)
+			Layer::moveIntoSelf(std::move(im));
+		return *this;
+	}
+
+	void moveIntoSelf(Layer&& l)
+	{
+		mTiles = std::move(l.mTiles);
+	}
 
     TileContainer mTiles;
 

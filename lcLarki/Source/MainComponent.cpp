@@ -97,11 +97,38 @@ public:
 		beginDraw();
 		OperationRender ore;
 		ore.visit(&mCanvasView);
-		//mCursor.draw(mCanvas.mCamera.matrix(), mMainShader);
+		mCursor.draw(mCanvasView.mCamera.matrix(), mMainShader);
 		endDraw();
     }
 
 	void mouseDrag(const MouseEvent& e) override
+	{
+		mouseMove(e);
+		math::vec2i position = math::vec2i(e.x, e.y);
+		math::vec2 delta = math::vec2((float)position.x, (float)position.y) - math::vec2((float)mLastMousePosition.x, (float)mLastMousePosition.y);
+
+		if (e.mods.isRightButtonDown()) //panning has priority.
+			mCanvasView.pan(delta.x, delta.y);
+
+		if (e.mods.isLeftButtonDown())
+			applyBrush();	
+	}
+
+	void mouseDown(const MouseEvent& e) override
+	{
+		if (e.mods.isLeftButtonDown())
+			applyBrush();
+	}
+
+	void applyBrush()
+	{
+		OperationApplyBrush op;
+		op.radius = 10;
+		op.worldPos = mCursor.globalPos();
+		op.visit(&mCanvas);
+	}
+
+	void mouseMove(const MouseEvent& e) override
 	{
 		math::vec2i position = math::vec2i(e.x, e.y);
 		math::vec2 delta = math::vec2(position.x, position.y) -
@@ -109,19 +136,6 @@ public:
 
 		//This is not wrong. The second part accounts for aspect ratio ^.^
 		delta /= this->getBounds().getWidth() / 2.f;
-
-		if (e.mods.isRightButtonDown()) //panning has priority.
-		{
-			mCanvasView.pan(delta.x, delta.y);
-		}
-		else if (e.mods.isLeftButtonDown())
-		{
-			OperationApplyBrush op;
-			op.radius = 10;
-			op.worldPos = mCursor.globalPos();
-			op.visit(&mCanvas);
-
-		}
 
 		mLastMousePosition = math::vec2i(e.x, e.y);
 		mNormalisedMousePosition = math::vec2(((float)mLastMousePosition.x / this->getBounds().getWidth() - 0.5f) * 2,

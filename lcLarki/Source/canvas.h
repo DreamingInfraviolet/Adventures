@@ -11,6 +11,7 @@ private:
 public:
 	std::vector<Layer> mLayers;
     Canvas();
+	Canvas(const Canvas&) = delete;
 
 	int layerCount() const;
 	Layer& createLayer();

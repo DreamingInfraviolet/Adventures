@@ -39,10 +39,5 @@ public:
 
     uint32_t* getPixel(int x, int y);
 
-	void upload()
-	{
-		for (auto& a : mTileGrid)
-			for (auto& b : a)
-				b->upload();
-	}
+	void upload();
 };

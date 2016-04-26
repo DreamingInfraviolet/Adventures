@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "canvas.h"
-#include "glwidget.h"
 #include "rectangle.h"
 #include "virtualtilegrid.h"
 #include "io.h"
