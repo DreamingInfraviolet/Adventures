@@ -15,105 +15,106 @@ static yyFlexLexer lexer;
 
 int fyylex()
 {
-	return lexer.yylex();
+    return lexer.yylex();
 }
 
 namespace fabula
 {
-	namespace parsing
-	{
-		Parser* Parser::mInstance = nullptr;
+    namespace parsing
+    {
+        Parser* Parser::mInstance = nullptr;
 
-		Parser::Parser(std::istream& inputStream, const std::string& rootPath)
-			:  mParseTree(nullptr)
-		{
-			setInputStream(inputStream, rootPath);
-		}
+        Parser::Parser(std::istream& inputStream, const std::string& rootPath)
+            :  mParseTree(nullptr)
+        {
+            setInputStream(inputStream, rootPath);
+        }
 
-		Parser::~Parser()
-		{
-			//Check that we are disposing of the object properly.
-			if (mInstance)
-				Log::w("Destroying parser without using the destroy() method is dangerous.",
-					Log::Severity::Medium, Log::Type::Internal);
-			if (mParseTree)
-				delete mParseTree;
-		}
+        Parser::~Parser()
+        {
+            //Check that we are disposing of the object properly.
+            if (mInstance)
+                Log::w("Destroying parser without using the destroy() method is dangerous.",
+                    Log::Severity::Medium, Log::Type::Internal);
+            if (mParseTree)
+                delete mParseTree;
+        }
 
-		Parser* Parser::create(std::istream& inputStream, const std::string& rootPath)
-		{
-			if (mInstance)
-			{
-				Log::w("Attempting to create multiple parser instances. Returning original.",
-					Log::Severity::Low, Log::Type::Internal);
-				return mInstance;
-			}
-			else
-				return mInstance = new Parser(inputStream, rootPath);
-		}
+        Parser* Parser::create(std::istream& inputStream, const std::string& rootPath)
+        {
+            if (mInstance)
+            {
+                Log::w("Attempting to create multiple parser instances. Returning original.",
+                    Log::Severity::Low, Log::Type::Internal);
+                return mInstance;
+            }
+            else
+                return mInstance = new Parser(inputStream, rootPath);
+        }
 
-		void Parser::destroy(Parser* parser)
-		{
-			Parser* inst = mInstance;
-			mInstance = nullptr;
-			delete inst;
-		}
+        void Parser::destroy(Parser* parser)
+        {
+            Parser* inst = mInstance;
+            mInstance = nullptr;
+            delete inst;
+        }
 
-		Parser* Parser::instance()
-		{
-			return mInstance;
-		}
-		
-		void Parser::setInputStream(std::istream& inputStream, const std::string& rootPath)
-		{
-			mRootPath = rootPath;
-			lexer.yyrestart(&inputStream);
-		}
+        Parser* Parser::instance()
+        {
+            return mInstance;
+        }
 
-		void Parser::parse()
-		{
-			static std::atomic<bool> wasAlreadyParsing = false;
+        void Parser::setInputStream(std::istream& inputStream, const std::string& rootPath)
+        {
+            mRootPath = rootPath;
+            lexer.yyrestart(&inputStream);
+        }
 
-			if (wasAlreadyParsing)
-				assert(false);
-			else
-				wasAlreadyParsing = true;
+        void Parser::parse()
+        {
+            static std::atomic<bool> wasAlreadyParsing;
+            wasAlreadyParsing = false;
 
-			fyyparse();
-			if (mParseTree)
-			{
-				VisitorParentBinder vp;
-				VisitorSemanticChecker vs;
-				vp.visit(*mParseTree);
-				vs.visit(*mParseTree);
-			}
-			else
-			{
-				//there was an error
-			}
+            if (wasAlreadyParsing)
+                assert(false);
+            else
+                wasAlreadyParsing = true;
 
-			wasAlreadyParsing = false;
-		}
+            fyyparse();
+            if (mParseTree)
+            {
+                VisitorParentBinder vp;
+                VisitorSemanticChecker vs;
+                vp.visit(*mParseTree);
+                vs.visit(*mParseTree);
+            }
+            else
+            {
+                //there was an error
+            }
 
-		void Parser::setParseResult(fabula::parsing::node::Section* result)
-		{
-			if (mParseTree)
-				delete mParseTree;
-			mParseTree = result;
-		}
+            wasAlreadyParsing = false;
+        }
 
-		node::Section* Parser::getParseResult()
-		{
-			return mParseTree;
-		}
+        void Parser::setParseResult(fabula::parsing::node::Section* result)
+        {
+            if (mParseTree)
+                delete mParseTree;
+            mParseTree = result;
+        }
 
-		void Parser::write(Writer& writer)
-		{
-			if (mParseTree)
-			{
-				VisitorWriter vw(writer);
-				vw.visit(*mParseTree);
-			}
-		}
-	}
+        node::Section* Parser::getParseResult()
+        {
+            return mParseTree;
+        }
+
+        void Parser::write(Writer& writer)
+        {
+            if (mParseTree)
+            {
+                VisitorWriter vw(writer);
+                vw.visit(*mParseTree);
+            }
+        }
+    }
 }

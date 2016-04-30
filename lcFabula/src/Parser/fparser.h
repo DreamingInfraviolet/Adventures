@@ -24,8 +24,8 @@ namespace fabula
 
             static Parser* mInstance;
 
-			fabula::parsing::node::Section* mParseTree; //Represents the current internal tree
-			std::string mRootPath;
+            fabula::parsing::node::Section* mParseTree; //Represents the current internal tree
+            std::string mRootPath;
 
             Parser(std::istream& inputStream, const std::string& rootPath);
 

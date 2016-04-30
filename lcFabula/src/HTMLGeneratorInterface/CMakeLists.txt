@@ -6,4 +6,4 @@ add_executable(FabulaHtmlInterface
                     ${PARSE_NODE_SOURCES})
 
 include_directories(. ${PARSER_DIR} ${PARSE_NODE_DIR})
-target_link_libraries(FabulaHtmlInterface FabulaParser)
+target_link_libraries(FabulaHtmlInterface ${Boost_LIBRARIES} FabulaParser)

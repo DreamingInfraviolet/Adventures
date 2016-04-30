@@ -35,6 +35,15 @@ file(GLOB    INTERFACE_HTML_SOURCES                ${INTERFACE_HTML_DIR}/*.cpp
 file(GLOB    INTERFACE_HTML_HEADERS                ${INTERFACE_HTML_DIR}/*.h
                                                    ${INTERFACE_HTML_DIR}/*.hpp)
 
+find_package(Boost REQUIRED program_options)
+
+set(PSC_TEST_SOURCES parametrised_string_constructor_test.cpp)
+set(PSC_TEST_HEADERS parametrised_string_constructor.h)
+
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common)
 add_subdirectory(Parser)
 add_subdirectory(ParserCommandLine)
