@@ -27,8 +27,8 @@ public:
 	Canvas mCanvas;
 	math::vec2i mLastMousePosition;
 	math::vec2 mNormalisedMousePosition;
-	Cursor mCursor;
 	CanvasView mCanvasView;
+	Cursor mCursor;
 
 	struct
 	{
@@ -96,23 +96,11 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 		beginDraw();
 		OperationRender ore;
+		ore.canvasView = &mCanvasView;
 		ore.visit(&mCanvasView);
 		mCursor.draw(mCanvasView.mCamera.matrix(), mMainShader);
 		endDraw();
     }
-
-	void mouseDrag(const MouseEvent& e) override
-	{
-		mouseMove(e);
-		math::vec2i position = math::vec2i(e.x, e.y);
-		math::vec2 delta = math::vec2((float)position.x, (float)position.y) - math::vec2((float)mLastMousePosition.x, (float)mLastMousePosition.y);
-
-		if (e.mods.isRightButtonDown()) //panning has priority.
-			mCanvasView.pan(delta.x, delta.y);
-
-		if (e.mods.isLeftButtonDown())
-			applyBrush();	
-	}
 
 	void mouseDown(const MouseEvent& e) override
 	{
@@ -123,9 +111,15 @@ public:
 	void applyBrush()
 	{
 		OperationApplyBrush op;
-		op.radius = 10;
+		op.radius = 0.1f;
 		op.worldPos = mCursor.globalPos();
+		op.canvasView = &mCanvasView;
 		op.visit(&mCanvas);
+	}
+
+	void mouseDrag(const MouseEvent& e) override
+	{
+		mouseMove(e);
 	}
 
 	void mouseMove(const MouseEvent& e) override
@@ -133,11 +127,18 @@ public:
 		math::vec2i position = math::vec2i(e.x, e.y);
 		math::vec2 delta = math::vec2(position.x, position.y) -
 			math::vec2(mLastMousePosition.x, mLastMousePosition.y);
+		mLastMousePosition = position;
 
 		//This is not wrong. The second part accounts for aspect ratio ^.^
 		delta /= this->getBounds().getWidth() / 2.f;
 
-		mLastMousePosition = math::vec2i(e.x, e.y);
+		if (e.mods.isRightButtonDown()) //panning has priority.
+			mCanvasView.pan(delta.x, delta.y);
+
+		if (e.mods.isLeftButtonDown())
+			applyBrush();
+
+		mLastMousePosition = position;
 		mNormalisedMousePosition = math::vec2(((float)mLastMousePosition.x / this->getBounds().getWidth() - 0.5f) * 2,
 			((float)mLastMousePosition.y / this->getBounds().getHeight() - 0.5f)*-2);
 		mCursor.globalPos(mNormalisedMousePosition, mCanvasView.mCamera.matrix());

@@ -35,10 +35,10 @@ namespace anima
 				return;
 
 			uint32_t px = 0;
-			px |= a;
-			px |= b << 8;
-			px |= g << 16;
-			px |= r << 24;
+			px |= ((uint32_t)a);
+			px |= ((uint32_t)b) << 8;
+			px |= ((uint32_t)g) << 16;
+			px |= ((uint32_t)r) << 24;
 			size_t totalSize = mWidth*mHeight*sizeof(uint32_t);
 			memset(mPixels, px, totalSize);
 		}

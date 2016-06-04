@@ -2,6 +2,7 @@
 #include "canvas_visitor.h"
 #include "shaderprogram.h"
 #include "virtualtilegrid.h"
+#include "canvas_view.h"
 
 class CanvasView;
 
@@ -19,7 +20,7 @@ public:
 	virtual void visit(Canvas* canvas) override
 	{
 		tileResolution = canvas->tileResolution();
-		CanvasVisitor::visit(canvas);
+		visit(&canvasView->currentLayer());
 	}
 
 	virtual void visit(Layer* layer) override
@@ -29,7 +30,7 @@ public:
 		//    for(int x = 0; x < vtg.width(); ++x)
 		//        for (int y = 0; y < vtg.height(); ++y)
 		//            vtg[x][y]=PixelARGB(255,255,255);
-
+		/*
 		math::vec2i middle = math::vec2i(vtg.width(), vtg.height()) / 2;
 		for (int x = 0; x < vtg.width(); ++x)
 			for (int y = 0; y < vtg.height(); ++y)
@@ -38,7 +39,7 @@ public:
 				uint32_t pixel = d>radius ? 0u:~0u;
 				*vtg.getPixel(x,y)=pixel;
 			}
-
-		vtg.upload();
+			*/
+		//vtg.upload();
 	}
 };

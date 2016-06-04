@@ -8,6 +8,7 @@ Layer::Layer()
 
 anima::graphics::ISprite* Layer::createTile(const math::vec2i& index, int resolution)
 {
+	
     auto it = mTiles.find(index);
 
     //if tile does not exist, create it.
@@ -15,10 +16,10 @@ anima::graphics::ISprite* Layer::createTile(const math::vec2i& index, int resolu
     {
 		anima::graphics::ISprite tile;
         tile.setSize(resolution, resolution);
-        tile.fill(0,0,0,0);
-
+		tile.mPos = index;
+        tile.fill(255,0,0,0);
         tile.upload();
-        auto newIterator = mTiles.insert(std::make_pair(index, std::move(tile))).first;
+        auto newIterator = mTiles.insert(std::make_pair(index, std::move(tile))).first; //culpit
         return &(newIterator->second);
     }
     else

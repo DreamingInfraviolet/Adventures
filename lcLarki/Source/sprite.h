@@ -25,6 +25,8 @@ namespace anima
 					Sprite::moveIntoSelf(std::move(sprite));
 			}
 
+			virtual ~Sprite() {}
+
 			void moveIntoSelf(Sprite&& sprite)
 			{
 				ImageGPU::moveIntoSelf(std::move(sprite));
